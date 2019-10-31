@@ -1,0 +1,184 @@
+html, body {
+    background-color: #fff;
+    color: #636b6f;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    height: 100vh;
+    margin: 0;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-size: 84px;
+}
+
+.links > a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+
+
+.container {
+    padding: 16px;
+}
+input{
+    width: 60%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: block;
+    border: none;
+    background: #f1f1f1;
+}
+input:focus{
+    background-color: #ddd;
+    outline:none;
+}
+input[type=radio]{
+    width: 5%;
+    padding:0px;
+    margin: 0px 0px 0px 0px;
+    display:inline-flex;
+    border:none;
+}
+input[type=checkbox]{
+    width: 5%;
+    padding:0px;
+    margin: 0px 0px 0px 0px;
+    display:inline;
+    border:none;
+}
+textarea{
+    display: block;
+    width: 75%;
+    
+}
+select{
+    width: 60%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+    
+}
+
+td{
+  text-align: center;
+}
+th{
+  text-align: center;
+}
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+span {
+    display: block;
+}
+#myProgress{
+    width:100%;
+    background: grey;
+}
+#myBar{
+    height:30px;
+    background-color: #4CAF50;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+}
+
+.btn{
+      background-color: #4CAF50;
+      color: white;
+      padding: 16px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      opacity: 0.9;
+    }
+.delbtn{
+  background-color: #ffffff;
+  color: black;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: 1px solid;
+  border-color: #336699
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover{
+  opacity:1;
+}
+.delbtn:hover{
+  opacity:1;
+}
+.centre {
+  text-align: center;
+}
+/* The alert message box */
+.alert {
+  padding: 16px 20px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-bottom: 15px;
+  opacity: 0.5;
+  border: 2px solid red;
+  border-radius: 8px;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
+
+ul {
+  list-style-type: none;
+  margin:0;
+  padding: 0;
+}
