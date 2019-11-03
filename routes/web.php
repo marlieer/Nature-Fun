@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'PagesController@home');
+Route::get('/', 'PagesController@welcome');
+Route::get('/home','HomeController@index');
 
 Route::post('/family2', 'FamilyController@store2');
 Route::get('/family/create2','FamilyController@create2');

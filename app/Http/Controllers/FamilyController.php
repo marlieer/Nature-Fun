@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Family;
 use App\Child;
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class FamilyController extends Controller
 {
@@ -19,25 +23,31 @@ class FamilyController extends Controller
         return view('family/create2');
     }
 
-    public function store(){
+    public function store(Request $request){
 
         $attributes = request()->validate([
-            'firstName'=>'required',
-            'lastName'=>'required',
+            'first_name'=>'required',
+            'last_name'=>'required',
             'phone'=>['required'],
-            'email'=>['required','unique:family,email','email:rfc,dns'],
-            'password'=>['required','min:8','confirmed']
+            'email'=>['required','unique:family,email','unique:users,email','email:rfc,dns'],
+            'password'=>['required','min:8','confirmed'],
         ]);
         
-    	$family = Family::firstOrCreate(
-            ['email'=>$attributes['email']], $attributes);
+        // save new family (but do not persist to database) Instead,
+        // store family info in session attribute
+    	$family = Family::firstOrNew(
+            ['email'=>$attributes['email']], 
+            $attributes,
+        );
+        $request->session()->put('family',$family);
+
 
     	return redirect('/family/create2');
     
     }
 
-    public function store2(){
-        //dd(request()->all());
+    public function store2(Request $request){
+        
         $attributes = request()->validate([
             'emerg_contact'=>['max:70','required'],
             'emerg_phone'=>'max:15',
@@ -47,13 +57,34 @@ class FamilyController extends Controller
             'can_call_emerg'=>'boolean',
             'can_take_photos'=>'boolean',
             'iscustody'=>'boolean',
-            'custody_notes'=>'max:300'
+            'custody_notes'=>'max:300',
             ]);
 
-        $family = Family::find(session('id'));
+        // pull previously saved family info and create new family
+        // with new attributes added. persist to database.
+        $family = $request->session()->pull('family');
+        $family->save();
         $family->update($attributes);
 
-        return redirect('/child/create');
+        // create new user for easy login based on family name, email, pass
+        User::create([
+            'name'=>$family->first_name,
+            'email'=>$family->email,
+            'password'=>Hash::make($family->password),
+            'id'=>$family->f_id,
+        ]);
+
+        // clean out session data
+        $request->session()->flush();
+
+        // login new user and redirect to sign up child
+        $credentials = array('email'=>$family->email,'password'=>$family->password);
+        if (Auth::attempt($credentials)){
+            echo "Attempting auth";
+            return redirect('/child/create');
+        }
+        echo "No Auth";
+        return redirect('/');
     }
 
     public function show(family $family)

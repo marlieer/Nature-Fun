@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layout')
 
 @section('content')
 <div class="container">
@@ -6,6 +6,18 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Dashboard</div>
+
+                <div class="card-header">
+                Children
+                </div>
+                <div class="card-body">
+                    <ul>
+                        @foreach ($children as $child)
+                            <li>{{ $child->child_name }}</li>
+                        @endforeach
+                        <li><a href="/child/create">Add Child</a></li>
+                    </ul>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))

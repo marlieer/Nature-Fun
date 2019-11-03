@@ -20,7 +20,7 @@
                         <a href="{{ url('/home') }}">Home</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
+                        <a href="{{ url('/family/create') }}">Register</a>
                         @endif
                     @endauth
                 </div>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="http://naturefun.test/signup">Sign Up</a>
+                    <a href="http://naturefun.test/family/create">Sign Up</a>
                     <a href="https://laracasts.com">Log In</a>
                     <a href="http://naturefun.test/session">Our Summer Schedule</a>
                     <a href="https://www.facebook.com/scoutisland/">Check Us On Facebook!</a>

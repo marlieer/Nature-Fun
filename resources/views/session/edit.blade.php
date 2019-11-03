@@ -13,6 +13,7 @@
 </div>
 @endif
 
+<div class="container-fluid">
 <form method="POST" action="/session/{{$session->s_id}}" style="margin-bottom: lem">
 	{{method_field("PATCH")}}
 	{{csrf_field()}}
@@ -128,6 +129,7 @@
 		</div>
 	</div>
 </form>
+</div>
 
 
 @endsection

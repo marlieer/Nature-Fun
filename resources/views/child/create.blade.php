@@ -1,7 +1,7 @@
-@extends('layout');
-@section('title', 'Child Sign Up');
+@extends('layout')
+@section('title', 'Child Sign Up')
+@section('h1','Nature Fun Sign Up')
 @section('content')
-<h1 class="centre">Nature Fun Sign Up</h1>
 
 <div id="myProgress">
 	<div id="myBar" style="width:100%">Step 3 of 3</div>
@@ -17,14 +17,13 @@
 </div>
 @endif
 
-<form method="POST" action="/signupPage3">
+<form method="POST" action="/child">
 	{{csrf_field()}}
 	<div class="container">
-		<h2>Finally, we need your child(ren)'s information. Then you're done with signing up!</h2>
+		<h2>Please fill in your child's information</h2>
+		<p>If you want to sign up additional children, go to your profile to add them after submitting this form.</p>
 
 		<hr>
-		
-		<h3>Child 1:</h3>
 
 		<span>
 			<label for="child_name"><b>Name</b>

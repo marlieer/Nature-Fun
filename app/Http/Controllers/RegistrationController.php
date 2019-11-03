@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Session;
 use App\Family;
 use App\Child;
+use Illuminate\Support\Facades\Auth;
 
 class RegistrationController extends Controller
 {
@@ -29,7 +30,8 @@ class RegistrationController extends Controller
     {
 
         $session = Session::findOrFail($s_id);
-        $children = Child::get()->where('f_id','=',(session('id')));
+        $family = session('family');
+        $children = Child::get()->where('f_id','=', Auth::user()->id);
         return view('registration.create', compact('session'), compact('children'));
     }
 

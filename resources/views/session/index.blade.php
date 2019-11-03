@@ -3,7 +3,8 @@
 @section('h1', 'Our Summer Schedule')
 @section('content')
 
-<div>
+<hr>
+<div class="container-fluid">
 	<p> If there are no spots available, please register on our waitlist. We'll contact you if a spot opens up.</p>
 </div>
 

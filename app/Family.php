@@ -11,6 +11,6 @@ class Family extends Model
      public $timestamps = false;
 
      protected $fillable = [
-     	'first_name', 'last_name', 'phone', 'email','password', 'emerg_contact', 'emerg_phone','doctor','doc_phone','child_pickup','can_all_emerg','can_take_photos','custody_notes','iscustody'
+     	'first_name', 'last_name', 'phone', 'email','password', 'emerg_contact', 'emerg_phone','doctor','doc_phone','child_pickup','can_call_emerg','can_take_photos','custody_notes','iscustody'
      ];
 }

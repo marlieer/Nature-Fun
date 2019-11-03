@@ -12,7 +12,7 @@
 			<p>Session ID: {{ $session->s_id }}</p>
 			<p>Session Title: {{ $session->title }}</p>
 			<p>Session Date: {{ $session->date }}</p>
-			<p>Family ID: {{ session('id')}}</p>
+			<p>Family ID: {{ Auth::user()->id}}</p>
 			@foreach ($children as $child)
 				<p>Child Name: {{ $child->child_name }}</p>
 			@endforeach
