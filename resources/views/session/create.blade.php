@@ -106,8 +106,9 @@
 
 	<hr>
 
-	<button style="width:30%; background-color:grey" type="cancel" name="cancel" class="btn">Cancel</button>
-	<button style="width:30%" type="submit" name="sessionbtn" class="btn">Finish</button>
+	
+	<button style="width:30%" type="submit" name="sessionbtn" class="btn btn-success">Finish</button><br>
+	<a href="/session" style="width:30%; background-color:grey" type="cancel" name="cancel" class="btn btn-secondary">Cancel</a>
 
 </div>
 </form>

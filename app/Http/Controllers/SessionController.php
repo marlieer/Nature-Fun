@@ -40,7 +40,7 @@ class SessionController extends Controller
         ]);
 
         $start_date = request('session_date');
-        $this->createSession($request, $start_date);
+        $this->createSession($attributes, $start_date);
 
         if (request('end_repeat')){
             $end_repeat = new DateTime(request('end_repeat'));
@@ -102,11 +102,8 @@ class SessionController extends Controller
 
     public function createSession($attributes, $date){
 
-       // dd(request()->all());
-        $id = Session::create($attributes);
-        $session = Session::find($id->s_id);
-        $session->date = $date;
-        $session->save();
+        $session = Session::create($attributes);
+        $session->update(['date'=>$date]);
     }
 
 
