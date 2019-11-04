@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller
 {
@@ -14,8 +15,10 @@ class SessionController extends Controller
     public function index()
     {
         $sessions = Session::all()->sortBy('date');
-
-        return view('session.index', compact('sessions'));
+        $id=-1;
+        if (Auth::check())
+            $id = Auth::id();
+        return view('session.index', compact('sessions'), compact('id'));
     }
 
    

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Register;
+use App\Registration;
 use Illuminate\Http\Request;
 use App\Session;
 use App\Family;
@@ -28,11 +28,14 @@ class RegistrationController extends Controller
      */
     public function create($s_id)
     {
+        if (Auth::check()){
 
-        $session = Session::findOrFail($s_id);
-        $family = session('family');
-        $children = Child::get()->where('f_id','=', Auth::user()->id);
-        return view('registration.create', compact('session'), compact('children'));
+            $session = Session::findOrFail($s_id);
+            $family = session('family');
+            $children = Child::get()->where('f_id','=', Auth::user()->id);
+            return view('registration.create', compact('session'), compact('children'));
+        }
+        else return redirect()->route('login');
     }
 
     /**
@@ -41,13 +44,14 @@ class RegistrationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $s_id)
+    public function store(Request $request)
     {
-        $registration = new Registration();
-        $registration->s_id = $s_id;
-        $registration->c_id = request('c_id');
-        $registration->save();
-
+        $attributes = request()->validate([
+            's_id'=>'required|exists:session,s_id',
+            'c_id'=>'required|exists:child,c_id',
+        ]);
+        $registration = Registration::create($attributes);
+       
         return redirect('/session');
     }
 

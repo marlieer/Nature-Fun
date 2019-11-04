@@ -5,6 +5,16 @@
 
 <h1 class="centre">Register for Our Summer Programs!</h1>
 
+@if ($errors->any())
+<div class="alert">
+	<ul>
+		@foreach($errors->all() as $error)
+		<li>{{$error}}</li>
+		@endforeach
+	</ul>			
+</div>
+@endif
+
 <form method="POST" action="/registration">
 	{{csrf_field()}}
 	<div class="container">		
@@ -13,11 +23,12 @@
 			<input type="hidden" name="s_id" value="{{ $session->s_id }}"></input>
 			<p>{{ $session->title }}</p>
 			<p>{{ $session->date }}</p>
+			<p>{{ $session->start_time }} to {{ $session->end_time }}</p>
 			<input type="hidden" name="f_id" value="{{ Auth::id() }}"></input>
 
 			<p>Register my child(ren)</p>
 			@foreach ($children as $child)
-				<input type="checkbox" value="{{ $child->c_id }}" name="{{ $child->c_id }}"> {{ $child->child_name }}</input><br>
+				<input type="checkbox" value="{{ $child->c_id }}" name="c_id"> {{ $child->child_name }}</input><br>
 			@endforeach
 
 		<hr>
