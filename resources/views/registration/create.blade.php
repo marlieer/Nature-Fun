@@ -3,8 +3,6 @@
 @section('h1', 'Register for Sessions')
 @section('content')
 
-<h1 class="centre">Register for Our Summer Programs!</h1>
-
 @if ($errors->any())
 <div class="alert">
 	<ul>
@@ -22,17 +20,17 @@
 		
 			<input type="hidden" name="s_id" value="{{ $session->s_id }}"></input>
 			<p>{{ $session->title }}</p>
-			<p>{{ $session->date }}</p>
-			<p>{{ $session->start_time }} to {{ $session->end_time }}</p>
+			<p>{{ date('F j, Y', strtotime($session->date)) }}</p>
+			<p>{{ date('g:i a', strtotime($session->start_time)) }} to {{ date('g:i a', strtotime($session->end_time)) }}</p>
 			<input type="hidden" name="f_id" value="{{ Auth::id() }}"></input>
 
 			<p>Register my child(ren)</p>
 			@foreach ($children as $child)
-				<input type="checkbox" value="{{ $child->c_id }}" name="c_id"> {{ $child->child_name }}</input><br>
+				<input type="checkbox" value="{{ $child->c_id }}" name="{{ $child->c_id }}"> {{ $child->child_name }}</input><br>
 			@endforeach
 
 		<hr>
-		<button style="width:30%" type="submit" name="sessionbtn" class="btn btn-success">Finish</button><br>
+		<button style="width:30%" type="submit" name="sessionbtn" class="btn btn-success">Register</button><br>
 		<a href="/session" style=" width:30%; background-color:grey" name="cancel"class="btn btn-secondary">Cancel</a>
 
 	</div>

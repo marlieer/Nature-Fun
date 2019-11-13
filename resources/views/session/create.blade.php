@@ -22,15 +22,15 @@
 
 		<div>
 			Date:
-			<input type="date" name="session_date"/>
+			<input type="date" name="session_date" value="{{ old('session_date') }}"/>
 		</div>
 		<div>
 			Start time:
-			<input type="time" name="start_time"/>
+			<input type="time" name="start_time" value="{{old('start_time')}}"/>
 		</div>
 		<div>
 			End Time:
-			<input type="time" name="end_time"/>
+			<input type="time" name="end_time" value="{{old('end_time')}}" />
 		</div>
 
 		<div>
@@ -44,7 +44,7 @@
 		<br>
 		<div>
 			End Repeat:
-			<input type="date" name="end_repeat"/>
+			<input type="date" name="end_repeat" value="{{old('end_repeat')}}"/>
 		</div>
 
 		<div>

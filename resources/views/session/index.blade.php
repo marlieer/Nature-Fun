@@ -20,18 +20,25 @@
 <tr>
 	<td>{{ $session->title }}</td>
 	@if ($id == 1)
-		<td><a href="session/{{ $session->s_id }}/edit">{{ $session->date }}</a></td>
+		<td><a href="session/{{ $session->s_id }}/edit">{{ date('M j, Y', strtotime($session->date)) }}</a></td>
 	@else
-		<td>{{ $session->date }}</td>
+		<td>{{ date('M j', strtotime($session->date)) }}</td>
 	@endif
-	<td>{{ $session->start_time }}</td>
-	<td>{{ $session->end_time }}</td>
-
-	@if ($session->is_full)=='f'
+	<td>{{ date('g:i a', strtotime($session->start_time)) }}</td>
+	<td>{{ date('g:i a', strtotime($session->end_time)) }}</td>
+@if ($id == 1)
+    @if (($session->is_full) == 't')
+        <td><a href="session/{{$session->s_id}}">Full! View List</a></td>
+    @else
+        <td><a href="session/{{$session->s_id}}">{{ $spotsAvailable[$session->s_id] }} spots left! View Class</a></td>
+    @endif
+@else
+	@if (($session->is_full)=='t')
 		<td><a href="waitlist/{{ $session->s_id}}/create">No, Waitlist Me</a></td>
 	@else
-		<td><a href="registration/{{ $session->s_id }}/create">Yes! Register Me</a></td>
+		<td><a href="registration/{{ $session->s_id }}/create">{{ $spotsAvailable[$session->s_id] }} spots left! Register Me</a></td>
 	@endif
+@endif
 </tr>
 @endforeach
 </table>

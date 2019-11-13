@@ -23,5 +23,6 @@ Route::resource('child','ChildController');
 Route::resource('family','FamilyController');
 
 Route::get('/registration/{session}/create','RegistrationController@create');
+Route::post('/registrationAsAdmin','RegistrationController@storeAsAdmin');
 
 Auth::routes();
