@@ -115,7 +115,7 @@
 
 	<div class="field">
 		<div class="control">
-			<button type="submit" name="regbtn" class="btn" style="width:30%">Update Session</button>
+			<button type="submit" name="regbtn" class="btn btn-success" style="width:30%">Update Session</button>
 		</div>
 	</div>
 </form>
@@ -125,7 +125,7 @@
 	@csrf
 	<div class="field">
 		<div class="control">
-			<button type="submit" class="delbtn" name="delbtn" color="grey" style="width:30%">Delete Session</button>
+			<button type="submit" class="btn btn-secondary" name="delbtn" style="width:30%; background-color: grey;">Delete Session</button>
 		</div>
 	</div>
 </form>

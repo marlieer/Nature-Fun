@@ -67,7 +67,7 @@ class FamilyController extends Controller
         $family->update($attributes);
 
         // create new user for easy login based on family name, email, pass
-        User::create([
+        $user = User::create([
             'name'=>$family->first_name,
             'email'=>$family->email,
             'password'=>Hash::make($family->password),
@@ -78,13 +78,8 @@ class FamilyController extends Controller
         $request->session()->flush();
 
         // login new user and redirect to sign up child
-        $credentials = array('email'=>$family->email,'password'=>$family->password);
-        if (Auth::attempt($credentials)){
-            echo "Attempting auth";
-            return redirect('/child/create');
-        }
-        echo "No Auth";
-        return redirect('/');
+        Auth::login($user);
+        return redirect('/child/create');
     }
 
     public function show(family $family)

@@ -18,6 +18,14 @@
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ url('/family/create') }}">Register</a>
@@ -31,8 +39,6 @@
                 </div>
 
                 <div class="links">
-                    <a href="http://naturefun.test/family/create">Sign Up</a>
-                    <a href="https://laracasts.com">Log In</a>
                     <a href="http://naturefun.test/session">Our Summer Schedule</a>
                     <a href="https://www.facebook.com/scoutisland/">Check Us On Facebook!</a>
                     <a href="https://scoutisland.ca/">Scout Island Website</a>
