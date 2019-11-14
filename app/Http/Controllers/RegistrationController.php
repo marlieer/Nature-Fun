@@ -10,6 +10,9 @@ use App\Family;
 use App\Child;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
+use Validator;
+use Redirect;
+use Illuminate\Validation\Rule;
 
 class RegistrationController extends Controller
 {
@@ -53,24 +56,11 @@ class RegistrationController extends Controller
             'f_id'=>'required|exists:family,f_id',
         ]);
 
-        $session = Session::where('s_id',$attributes['s_id'])->first();
         $children = Child::where('f_id',request()->f_id)->get();
         
-        foreach($children as $child){
+        return $this->checkAgeConstraints($children, $request);
 
-            // get the c_id passed through the request. Store as id
-            $id = request($child->c_id);
 
-            // if the request c_id has a value (ie checked) check age constraints
-            if(request($id) == $id) {
-                $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
-                $r_id = $this->checkAgeConstraints($child, $session, $request);
-            }
-        }
-        
-        if ($r_id == -1)
-            return back()->withInput();
-        return redirect()->route('registration.show',[$r_id]);
        
     }
 
@@ -82,104 +72,122 @@ class RegistrationController extends Controller
         ]);
 
         $children = Child::all();
-        $session = Session::where('s_id',$attributes['s_id'])->first();
-        $r_id;
-
-        foreach($children as $child){
-            $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
-            $r_id = $this->checkAgeConstraints($child, $session, $request);
-        }
-        
-        if ($r_id == -1)
-            return back()->withInput();
-        return redirect()->route('registration.show',[$r_id]);
+        return $this->checkAgeConstraints($children, $request);
     }
 
     
 
-    public function checkAgeConstraints($child, $session, Request $request){
+    public function checkAgeConstraints($children, Request $request){
         
         $r_id = -1;
+        $session = Session::where('s_id',request('s_id'))->first();
+        $classList = Registration::where('s_id', request('s_id'))
+            ->select('c_id')
+            ->get();
 
-        // check that child is within the age constraints
-        if (($child->age <= $session->max_age) && ($child->age >=$session->min_age)){
+        $list=[];
+        $success = 'Successfully registered';
 
-            // if the request c_id has a value (ie checked) AND session is not full, register child
-            if(!$session->is_full){
-                $registration = Registration::create([
-                    's_id'=>request('s_id'),
-                    'c_id'=>$child->c_id,
-                ]);
-
-                // update isFull status for session
-                if (count(Registration::where('s_id',$session->s_id)->get()) >= $session->max_attendance)
-                    $session->update(['is_full'=>'t']);
-
-                $r_id = $registration->r_id;            
-            }
-
-            else {
-            // throw error that there are not enough spots available
-            // ** TODO **
-            dd("No room " );
-            }
-            
+        foreach($classList as $c_id){
+            array_push($list,$c_id['c_id']);
         }
 
-        else {
-        // throw error that child does not meet age constraints
-        // ** TODO **
-        }
-        dd("Wrong age");
+        $errors = Validator::make($session->toArray(),
+                    ['min_age' => 'required']          
+                ); 
+       
+        foreach($children as $child){
 
-        return $r_id;
+            // get the c_id passed through the request. Store as id
+            $id = request($child->c_id);
+
+            // if the request c_id has a value (ie checked) check age constraints
+            if(request($id) == $id) {
+                $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
+                $child->age = (int)$child->age;
+
+                // check that child is within the age constraints and there is space in the session
+                $validator = Validator::make($child->toArray(),
+                    ['age' => "numeric|min:$session->min_age|max:$session->max_age"],
+                    ['is_full' => 'boolean:false'],
+                             
+                ); 
+
+                if(in_array($child->c_id, $list)){
+                    $validator->errors()->add('dum','dum');
+                    $errors->errors()->add('Already Registered',"$child->child_name is already registered in this session");
+                }
+                elseif ($validator->fails()){
+                    if($validator->messages()->get('age'))
+                        $errors->errors()->add('Age',"$child->child_name could not be registered because (s)he is not within the age limits for this session ($session->min_age to $session->max_age)");
+                    if($validator->messages()->get('is_full'))
+                        $errors->errors()->add('Full',"This session is now full. $child->child_name could not be registered");                       
+                }           
+                        
+                else {
+                    $registration = Registration::create([
+                        's_id'=>request('s_id'),
+                        'c_id'=>$child->c_id,
+                     ]);
+
+                    $success = $success . ", $child->child_name";
+
+                    $r_id = $registration->r_id;
+                    // update isFull status for session
+                    if (count(Registration::where('s_id',$session->s_id)->get()) >= $session->max_attendance)
+                        $session->update(['is_full'=>'t']);
+                
+                }
+            }
+        }
+        
+        if ($r_id == -1)
+            return back()->withErrors($errors);
+        $request->session()->flash('success', $success);
+        return redirect()->route('registration.show',[$r_id])->withErrors($errors);
 
     }
+
 
     public function show(Registration $registration)
     {
-        $children = DB::table('child')
-            
-            ->join('registration','child.c_id','=','registration.c_id')
-            ->where('registration.s_id','=',$registration->s_id)
-            ->where('child.f_id','=', Auth::user()->id)
-            ->select('child.child_name','registration.r_id')
-            ->get();
+        $id = Auth::user()->id;
+        $children;
+        if ($id == 1){
+            $children = DB::table('child')
 
+                ->join('registration','child.c_id','=','registration.c_id')
+                ->where('registration.s_id','=',$registration->s_id)
+                ->select('child.child_name','registration.r_id')
+                ->get();
+        }
+        else{
+            $children = DB::table('child')
+                
+                ->join('registration','child.c_id','=','registration.c_id')
+                ->where('registration.s_id','=',$registration->s_id)
+                ->where('child.f_id','=', $id)
+                ->select('child.child_name','registration.r_id')
+                ->get();
+        }
         $session = Session::find($registration->s_id);
 
-        return view('registration.show', compact('registration', 'children', 'session'));
+        return view('registration.show', compact('registration', 'children', 'session', 'id'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Register  $register
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit(Registration $registration)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Register  $register
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, Registration $registration)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Register  $register
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Registration $registration)
     {
        $registration->delete();

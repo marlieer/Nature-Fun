@@ -150,15 +150,7 @@ span {
   text-align: center;
 }
 /* The alert message box */
-.alert {
-  padding: 16px 20px;
-  background-color: #f44336; /* Red */
-  color: white;
-  margin-bottom: 15px;
-  opacity: 0.5;
-  border: 2px solid red;
-  border-radius: 8px;
-}
+
 
 /* The close button */
 .closebtn {

@@ -165,4 +165,10 @@ class SessionController extends Controller
         $session->delete();
         return redirect('/session');
     }
+
+
+    public function calendar(){
+        $sessions = Session::all();
+        return view('calendar', compact('sessions'));
+    }
 }

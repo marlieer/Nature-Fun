@@ -16,6 +16,7 @@
 		<th>Notes</th>
 		<th>Paid</th>
 	</tr>
+
 	@foreach ($children as $child)
 	<tr>
 		<td>
@@ -42,7 +43,12 @@
 		@endforeach
 	</table>
 
+<br>
+<hr>
 	<a href="/registration/{{ $session->s_id}}/create">Add Child to Session</a>
 	<br>
+	<a style="text-align: center;" href="/session/{{ $session->s_id }}/edit">Edit Session Details</a>
+	<br>
+	<hr>
 	<a href="/session" class="btn btn-success" style="width:60%;">Back to Summer Schedule</a>
 	@endsection
