@@ -13,7 +13,6 @@
 
 Route::get('/', 'PagesController@welcome');
 Route::get('/home','HomeController@index');
-Route::get('/calendar','SessionController@calendar');
 
 Route::post('/family2', 'FamilyController@store2');
 Route::get('/family/create2','FamilyController@create2');

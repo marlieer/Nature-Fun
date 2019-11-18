@@ -17,7 +17,7 @@ class SessionController extends Controller
     public function index()
     {
         $spotsAvailable;
-        $sessions = Session::all()->sortBy('date');
+        $sessions = DB::table('session')->orderBy('date',)->orderBy('start_time', 'asc')->get();
         foreach ($sessions as $s){
             $spotsAvailable[$s->s_id] = ($s->max_attendance - count(Registration::where('s_id',$s->s_id)->get()));
         }
@@ -166,9 +166,4 @@ class SessionController extends Controller
         return redirect('/session');
     }
 
-
-    public function calendar(){
-        $sessions = Session::all();
-        return view('calendar', compact('sessions'));
-    }
 }
