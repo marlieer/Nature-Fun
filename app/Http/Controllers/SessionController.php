@@ -125,12 +125,35 @@ class SessionController extends Controller
             ->where('registration.s_id',$session->s_id)
             ->select('child.*','registration.*','family.phone')
             ->get();
-        //$today = new DateTime();
+    
         foreach ($children as $child){
             $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
         }
        
         return view('session.show', compact('session','children'));
+    }
+
+
+    public function showbydate(String $date)
+    {
+        $sessions = Session::where('date',$date)->get();
+        $childrens = [];
+
+        foreach($sessions as $session){
+            $children = DB::table('child')
+            ->join('registration','child.c_id','=','registration.c_id')
+            ->join('family','child.f_id','=','family.f_id')
+            ->where('registration.s_id',$session->s_id)
+            ->select('child.*','registration.*','family.phone')
+            ->get();
+            $children->count = $children->count();
+        array_push($childrens, $children);
+        }
+        foreach($childrens as $children){
+            foreach($children as $child)
+                $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
+        }
+        return view('session.showbydate', compact('sessions','childrens'));
     }
 
 

@@ -1,5 +1,5 @@
 *Add time to session.index calendar
-Make print out of the day - Admin
+***Make print out of the day - Admin
 Add child manually - Admin
 Add My Registered Sessions - User
 *Make Successful registration green - registration.show

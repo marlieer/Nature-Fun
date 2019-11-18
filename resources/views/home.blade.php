@@ -8,6 +8,16 @@
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-header">
+                    My Upcoming Registered Sessions
+                </div>
+                    <div class="card-body">
+                    <ul>
+                        @foreach ($registrations as $reg)
+                        <li>{{ date('M j', strtotime($reg->date)) }} from {{ date('g:i a', strtotime($reg->start_time)) }}-{{ date('g:i a', strtotime($reg->end_time)) }} {{ $reg->child_name }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="card-header">
                 Children
                 </div>
                 <div class="card-body">
@@ -26,7 +36,6 @@
                         </div>
                     @endif
 
-                    You are logged in!
                 </div>
             </div>
         </div>

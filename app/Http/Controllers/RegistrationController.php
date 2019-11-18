@@ -79,6 +79,7 @@ class RegistrationController extends Controller
 
     public function checkAgeConstraints($children, Request $request){
         
+        // retrieve session and its classList
         $r_id = -1;
         $session = Session::where('s_id',request('s_id'))->first();
         $classList = Registration::where('s_id', request('s_id'))
@@ -88,10 +89,12 @@ class RegistrationController extends Controller
         $list=[];
         $success = 'Successfully registered';
 
+        // push c_id's to list of session's registered c_id's
         foreach($classList as $c_id){
             array_push($list,$c_id['c_id']);
         }
 
+        // dummy validator, to be used later
         $errors = Validator::make($session->toArray(),
                     ['min_age' => 'required']          
                 ); 
@@ -108,34 +111,45 @@ class RegistrationController extends Controller
 
                 // check that child is within the age constraints and there is space in the session
                 $validator = Validator::make($child->toArray(),
-                    ['age' => "numeric|min:$session->min_age|max:$session->max_age"],
-                    ['is_full' => 'boolean:false'],
-                             
+                    ['age' => "numeric|min:$session->min_age|max:$session->max_age"],                             
                 ); 
 
-                if(in_array($child->c_id, $list)){
+                // if session is full, throw error tht session is full
+                if($session->is_full == 't'){
+                    $validator->errors()->add('dum','dum');
+                   $errors->errors()->add('Full',"This session is now full. $child->child_name could not be registered");      
+                }
+
+                // if c_id is in class list already, throw error that they're already registered
+                elseif(in_array($child->c_id, $list)){
                     $validator->errors()->add('dum','dum');
                     $errors->errors()->add('Already Registered',"$child->child_name is already registered in this session");
                 }
+
+                // add error messages if validator fails for age or is_full
                 elseif ($validator->fails()){
                     if($validator->messages()->get('age'))
                         $errors->errors()->add('Age',"$child->child_name could not be registered because (s)he is not within the age limits for this session ($session->min_age to $session->max_age)");
-                    if($validator->messages()->get('is_full'))
-                        $errors->errors()->add('Full',"This session is now full. $child->child_name could not be registered");                       
                 }           
-                        
+                      
+                // if no validation failures, register child  
                 else {
                     $registration = Registration::create([
                         's_id'=>request('s_id'),
                         'c_id'=>$child->c_id,
                      ]);
 
+                    // add child's name to success message
                     $success = $success . ", $child->child_name";
 
                     $r_id = $registration->r_id;
+                    $num_registered = count(Registration::where('s_id',$session->s_id)->get());
+                        
                     // update isFull status for session
-                    if (count(Registration::where('s_id',$session->s_id)->get()) >= $session->max_attendance)
-                        $session->update(['is_full'=>'t']);
+                    if ($num_registered >= $session->max_attendance){
+                        $session->is_full='t';
+                        $session->save();
+                    }
                 
                 }
             }

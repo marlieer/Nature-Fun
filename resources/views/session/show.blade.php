@@ -3,6 +3,9 @@
 @section('h1', 'Class List')
 @section('content')
 <br>
+<div class="text-right">
+	<a href="/session/showbydate/{{ $session->date }}">View whole day</a>
+</div>
 <p>Date: {{ date('F j, Y', strtotime($session->date)) }}</p>
 <p>Time: {{ date('g:i a', strtotime($session->start_time)) }} to {{ date('g:i a', strtotime($session->end_time)) }}</p>
 

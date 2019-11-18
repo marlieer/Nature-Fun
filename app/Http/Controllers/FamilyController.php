@@ -65,6 +65,7 @@ class FamilyController extends Controller
         $family = $request->session()->pull('family');
         $family->save();
         $family->update($attributes);
+        $family->save();
 
         // create new user for easy login based on family name, email, pass
         $user = User::create([

@@ -57,7 +57,7 @@
     	});
 </script>
 </div>
-<br><br><hr>
+<!-- <br><br><hr>
 <table style = "width:100%">
 	<tr>
 		<th>Weekly Theme</th>
@@ -91,7 +91,7 @@
 		@endif
 	</tr>
 	@endforeach
-</table>
+</table> -->
 
 
 @endsection

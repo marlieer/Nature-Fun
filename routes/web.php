@@ -22,6 +22,8 @@ Route::resource('registration','RegistrationController');
 Route::resource('child','ChildController');
 Route::resource('family','FamilyController');
 
+Route::get('/session/showbydate/{date}', 'SessionController@showbydate');
+
 Route::get('/registration/{session}/create','RegistrationController@create');
 Route::post('/registrationAsAdmin','RegistrationController@storeAsAdmin');
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Child;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -26,6 +27,12 @@ class HomeController extends Controller
     public function index()
     {
         $children = Child::get()->where('f_id','=', Auth::user()->id);
-        return view('home', compact('children'));
+        $registrations = DB::table('child')
+            ->join('registration','registration.c_id','child.c_id')
+            ->join('family','family.f_id','child.f_id')
+            ->join('session','session.s_id','registration.s_id')
+            ->select('child.*','session.*','registration.*')
+            ->get();
+        return view('home', compact('children','registrations'));
     }
 }
