@@ -49,6 +49,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/session/create">Create Sessions</a>
                         </li>
+                        @else 
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registration">
+                            My Registered Sessions</a>
+                        </li>
                         @endif
                         @endif
                     </ul>

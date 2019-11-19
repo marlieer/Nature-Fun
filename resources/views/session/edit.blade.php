@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title', 'Edit Sessions')
 @section('content')
-<h1 class="centre">Edit Nature Fun Sessions</h1>
+@section('h1', 'Edit Nature Fun Sessions')
 
 @if ($errors->any())
 <div class="alert">

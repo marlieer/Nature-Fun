@@ -12,9 +12,10 @@
                 </div>
                     <div class="card-body">
                     <ul>
-                        @foreach ($registrations as $reg)
-                        <li>{{ date('M j', strtotime($reg->date)) }} from {{ date('g:i a', strtotime($reg->start_time)) }}-{{ date('g:i a', strtotime($reg->end_time)) }} {{ $reg->child_name }}</li>
+                        @foreach ($registrations->slice(0,5) as $reg)
+                        <li>{{ date('M j', strtotime($reg->date)) }}, {{ date('g:i a', strtotime($reg->start_time)) }} - {{ date('g:i a', strtotime($reg->end_time)) }}: {{ $reg->child_name }}</li>
                         @endforeach
+                    <li><a href="/registration">View All My Registrations</a></li>
                     </ul>
                 </div>
                 <div class="card-header">
