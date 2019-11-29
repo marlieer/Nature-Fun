@@ -3,24 +3,6 @@
 @section('h1', 'Registered!')
 @section('content')
 
-@if ($errors->any())
-<div class="alert alert-danger">
-	<ul>
-		@foreach($errors->all() as $error)
-		<li>{{$error}}</li>
-		@endforeach
-	</ul>			
-</div>
-@endif
-
-@if (Session::has('success'))
-    <div class="alert alert-success">
-        <ul>
-            <li>{{ \Session::get('success') }}</li>
-        </ul>
-    </div>
-@endif
-
 <br>
 <p>Registration ID: {{ $registration->r_id }}</p>
 <p>Session Date: {{ date('F j, Y', strtotime($session->date)) }}</p>

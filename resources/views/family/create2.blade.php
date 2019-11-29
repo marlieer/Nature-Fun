@@ -7,16 +7,6 @@
 	<div id="myBar" style="width:67%">Step 2 of 3</div>
 </div>
 
-@if ($errors->any())
-<div class="alert">
-	<ul>
-		@foreach($errors->all() as $error)
-		<li>{{$error}}</li>
-		@endforeach
-	</ul>			
-</div>
-@endif
-
 <form method="POST" action="/family2">
 	{{csrf_field()}}
 	<div class="container">
@@ -26,7 +16,7 @@
 			1) Fill in this form online and click next at the bottom to finish signing your children up, OR
 		</p>
 		<p>
-			2) Download the form <a href="registrationForm.doc">here</a> and hand it in to Scout Island (if you've filled out this form before, you just need to sign and redate for this year at Scout Island)
+			2) Request the paper form at Scout Island (if you've filled out this form before, you just need to sign and redate for this year at Scout Island)
 			Then click <a href="/child/create">here</a> to skip this page and sign your children up!
 		</p>
 		<p>

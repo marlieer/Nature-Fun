@@ -15,6 +15,15 @@ use Illuminate\Support\Facades\Auth;
 
 class FamilyController extends Controller
 {
+    public function index(){
+        if (Auth::id() == 1){
+            $families = Family::all();
+            $children = Child::all();
+            return view('family/index', compact('families', 'children'));
+        }
+        return redirect()->route('login');
+    }
+
     public function create(){
         return view('family/create');
     }
@@ -41,9 +50,7 @@ class FamilyController extends Controller
         );
         $request->session()->put('family',$family);
 
-
     	return redirect('/family/create2');
-    
     }
 
     public function store2(Request $request){
@@ -98,9 +105,7 @@ class FamilyController extends Controller
     public function update(Family $family)
     {
        $family->update($attributes);
-
         return redirect('/session');
-
     }
 
    

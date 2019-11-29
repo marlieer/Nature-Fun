@@ -5,24 +5,6 @@
 
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
 
-@if (Session::has('errors'))
-    <div class="alert alert-danger">
-        <ul>
-            <li>{{ \Session::get('errors') }}</li>
-        </ul>
-    </div>
-@endif
-
-@if (Session::has('success'))
-    <div class="alert alert-success">
-        <ul>
-            <li>{{ \Session::get('success') }}</li>
-        </ul>
-    </div>
-@endif
-
-<br>
-<p>Registrations for {{ Auth::user()->name }}</p>
 
 <div class="container">
 
@@ -41,7 +23,9 @@
                 {
                     title : '{{ date('g', strtotime($reg->start_time)) }}{{ ltrim(date('i', strtotime($reg->start_time)), 0) }}-{{ date('g', strtotime($reg->end_time)) }}{{ ltrim(date('i', strtotime($reg->start_time)), 0) }} {{ date('a', strtotime($reg->end_time)) }} \n {{ $reg->child_name }}',
                     start : '{{ $reg->date }}',
-                    url : '{{ route('registration.edit', $reg->r_id) }}'
+                    url : '{{ route('registration.edit', $reg->r_id) }}',
+                    color:'#174960',
+                    textColor:'white'
                 },
                 @endforeach
             ]

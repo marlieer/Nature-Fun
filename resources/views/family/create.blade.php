@@ -7,19 +7,9 @@
 		<div id="myBar" style="width:33%">Step 1 of 3</div>
 	</div>
 	@if ($errors->Unique())
-		<div class="alert">
+		<div class="alert alert-danger">
 			  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 			  Oops! Looks like your email is already associated to an account. Click <a href="/login">here</a> to go to Log in!
-		</div>
-	@endif
-
-	@if ($errors->any())
-		<div class="alert">
-			<ul>
-				@foreach($errors->all() as $error)
-				<li>{{$error}}</li>
-				@endforeach
-			</ul>			
 		</div>
 	@endif
 

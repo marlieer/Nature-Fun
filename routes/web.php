@@ -13,6 +13,9 @@
 
 Route::get('/', 'PagesController@welcome');
 Route::get('/home','HomeController@index');
+Route::get('/contact_us', function() {
+	return view('contact_us');
+});
 
 Route::post('/family2', 'FamilyController@store2');
 Route::get('/family/create2','FamilyController@create2');
@@ -26,5 +29,6 @@ Route::get('/session/showbydate/{date}', 'SessionController@showbydate');
 
 Route::get('/registration/{session}/create','RegistrationController@create');
 Route::post('/registrationAsAdmin','RegistrationController@storeAsAdmin');
+Route::post('/manualRegistration','RegistrationController@storeManual');
 
 Auth::routes();

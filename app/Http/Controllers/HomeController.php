@@ -31,7 +31,8 @@ class HomeController extends Controller
             ->join('registration','registration.c_id','child.c_id')
             ->join('family','family.f_id','child.f_id')
             ->join('session','session.s_id','registration.s_id')
-             ->where('session.date','>=', date('Y-m-d'))
+            ->where('session.date','>=', date('Y-m-d'))
+            ->where('family.f_id',Auth::user()->id)
             ->select('child.*','session.*','registration.*')
             ->get();
         return view('home', compact('children','registrations'));

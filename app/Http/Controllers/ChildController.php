@@ -10,18 +10,24 @@ use Illuminate\Support\Facades\Hash;
 
 class ChildController extends Controller
 {
-    public function index(){
-
-        $children = Child::all();
-
-        return view('child', compact('children'));
+    public function index()
+    {
+        if (Auth::id() == 1){
+            $children = Child::join('family','child.f_id','=','family.f_id')
+                    ->select('family.*','child.*')
+                    ->get();
+            return view('child/index', compact('children'));
+        }
+        return redirect()->route('login');
     }
 	
-    public function create(){
+    public function create()
+    {
 		return view('/child/create');
 	}
 
-	public function store(Request $request){
+	public function store(Request $request)
+    {
         if ($request->session()->has('family')){
             $family = $request->session()->pull('family');
             $family->save();

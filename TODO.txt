@@ -1,9 +1,14 @@
 *Add time to session.index calendar
 ***Make print out of the day - Admin
-Add child manually - Admin
+*Add child manually - Admin
 *Add My Registered Sessions - User
-*Make Successful registration green - registration.show
+*Make Successful registration green - *registration.show
 
-Add security and route authorization
-Add child manually
-refactor registrationController
+*Reorder h1 and nav bar and make better
+*walk through!
+*pictures on homepage
+*Add security and route authorization
+*refactor registrationController
+
+figure out why minutes only show if both times have minutes
+* add alert in manual register for admin if class is full, so they can force add or not add.

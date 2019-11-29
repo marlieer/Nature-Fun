@@ -3,23 +3,6 @@
 @section('content')
 @section('h1', 'Edit Registration')
 
-@if (Session::has('errors'))
-    <div class="alert alert-danger">
-        <ul>
-            <li>{{ \Session::get('errors') }}</li>
-        </ul>
-    </div>
-@endif
-
-@if (Session::has('success'))
-    <div class="alert alert-success">
-        <ul>
-            <li>{{ \Session::get('success') }}</li>
-        </ul>
-    </div>
-@endif
-
-<br>
 <p>If you're planning to cancel with less than 24 hour notice, you <strong>MUST</strong> call Scout Island Nature Centre at 250-398-8532 and you will not be refunded.</p>
 <div class="container-fluid">
 

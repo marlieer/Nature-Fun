@@ -3,16 +3,6 @@
 @section('content')
 @section('h1', 'Edit Nature Fun Sessions')
 
-@if ($errors->any())
-<div class="alert">
-	<ul>
-		@foreach($errors->all() as $error)
-		<li>{{$error}}</li>
-		@endforeach
-	</ul>			
-</div>
-@endif
-
 <div class="container-fluid">
 <form method="POST" action="/session/{{$session->s_id}}" style="margin-bottom: lem">
 	{{method_field("PATCH")}}

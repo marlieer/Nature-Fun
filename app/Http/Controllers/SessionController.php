@@ -17,9 +17,9 @@ class SessionController extends Controller
     public function index()
     {
         $spotsAvailable;
-        $sessions = DB::table('session')->orderBy('date',)->orderBy('start_time', 'asc')->get();
+        $sessions = Session::get();
         foreach ($sessions as $s){
-            $spotsAvailable[$s->s_id] = ($s->max_attendance - count(Registration::where('s_id',$s->s_id)->get()));
+            $spotsAvailable[$s->s_id] = $s->spotsAvailable();
         }
 
         $id=-1;
@@ -31,8 +31,9 @@ class SessionController extends Controller
    
     public function create()
     {
-        return view('/session/create');
-
+        if (Auth::id()==1)
+            return view('/session/create');
+        return redirect()->route('login');
     }
 
    
@@ -49,127 +50,70 @@ class SessionController extends Controller
             'min_age'=>'numeric'
         ]);
 
-        $start_date = request('session_date');
-        $this->createSession($attributes, $start_date);
-
-        if (request('end_repeat')){
-            $end_repeat = new DateTime(request('end_repeat'));
-            
-            
-            if (request('mon')=='mon'){
-                $date = new DateTime($start_date);
-                $date ->modify('next Monday')->format('Y-m-d');
-                while($date <= $end_repeat){
-                    $this->createSession($attributes, $date);
-                    $date ->modify('next Monday')->format('Y-m-d');
-                }
-
-            }
-
-            if(request('tue')=='tue'){
-                $date = new DateTime($start_date);
-                $date ->modify('next Tuesday')->format('Y-m-d');
-                while($date <= $end_repeat){
-                    $this->createSession($attributes, $date);
-                    $date ->modify('next Tuesday')->format('Y-m-d');
-                }
-
-            }
-
-            if(request('wed')=='wed'){
-                $date = new DateTime($start_date);
-                $date ->modify('next Wednesday')->format('Y-m-d');
-                while($date <= $end_repeat){
-                    $this->createSession($attributes, $date);
-                    $date ->modify('next Wednesday')->format('Y-m-d');
-                }
-
-            }
-
-            if(request('thu')=='thu'){;
-                $date = new DateTime($start_date);
-                $date ->modify('next Thursday')->format('Y-m-d');
-                while($date <= $end_repeat){
-                    $this->createSession($attributes, $date);
-                    $date ->modify('next Thursday')->format('Y-m-d');
-                }
-
-            }
-
-            if(request('fri')=='fri'){
-                $date = new DateTime($start_date);
-                $date ->modify('next Friday')->format('Y-m-d');
-                while($date <= $end_repeat){
-                    $this->createSession($attributes, $date);
-                    $date ->modify('next Friday')->format('Y-m-d');
-                }
-            }
-
-        }
+        Session::createSessions($attributes, $request);
 
         return redirect('/session');
-    }
-
-    public function createSession($attributes, $date){
-
-        $attributes['date']=$date;
-        $session = Session::create($attributes);
     }
 
 
     public function show(Session $session)
     {
-        $children = DB::table('child')
-            ->join('registration','child.c_id','=','registration.c_id')
-            ->join('family','child.f_id','=','family.f_id')
-            ->where('registration.s_id',$session->s_id)
-            ->select('child.*','registration.*','family.phone')
-            ->get();
-    
-        foreach ($children as $child){
-            $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
+        if (Auth::id()==1)
+        {
+            $children = $session->childrenInTheSystem();
+            $otherChildren = $session->childrenNotInTheSystem();
+            
+            foreach ($children as $child){
+                $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
+            }
+           
+            return view('session.show', compact('session','children','otherChildren'));
         }
-       
-        return view('session.show', compact('session','children'));
+        return redirect()->route('login');
     }
 
 
     public function showbydate(String $date)
     {
-        $sessions = Session::where('date',$date)->get();
-        $childrens = [];
+        if (Auth::id()==1)
+        {            
+            $sessions = Session::where('date',$date)->get();
+            $childrens = [];
+            $otherChildrens = [];
 
-        foreach($sessions as $session){
-            $children = DB::table('child')
-            ->join('registration','child.c_id','=','registration.c_id')
-            ->join('family','child.f_id','=','family.f_id')
-            ->where('registration.s_id',$session->s_id)
-            ->select('child.*','registration.*','family.phone')
-            ->get();
-            $children->count = $children->count();
-        array_push($childrens, $children);
+            foreach($sessions as $session)
+            {
+                $children = $session->childrenInTheSystem();
+                $otherChildren = $session->childrenNotInTheSystem();
+
+                foreach($children as $child)
+                    $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
+                
+                array_push($childrens, $children);
+                array_push($otherChildrens, $otherChildren);
+            }
+           
+            return view('session.showbydate', compact('sessions','childrens','otherChildrens'));
         }
-        foreach($childrens as $children){
-            foreach($children as $child)
-                $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
-        }
-        return view('session.showbydate', compact('sessions','childrens'));
+        return redirect()->route('login');
     }
 
 
     public function edit(Session $session)
     {
-        return view('session.edit', compact('session'));
+        if(Auth::id()==1)
+            return view('session.edit', compact('session'));
+        return redirect()->route('login');
     }
 
     
-    public function update(Session $session)
+    public function update(Session $session, Request $request)
     {
 
         $attributes = request()->validate(['session_date'=>['required','date'],
             'end_repeat'=>'date',
-            'start_time'=>'date_format:H:i:s',
-            'end_time'=>'date_format:H:i:s|after:start_time',
+            'start_time'=>'required',
+            'end_time'=>'required|after:start_time',
             'max_attendance'=>'numeric',
             'max_age'=>'numeric',
             'min_age'=>'numeric',
@@ -177,15 +121,16 @@ class SessionController extends Controller
         ]);        
 
        $session->update($attributes);
-
-        return redirect('/session');
+       $request->session()->flash('success', "Successfully updated!");
+        return redirect("/session/{$session->s_id}");
 
     }
 
    
-    public function destroy(Session $session)
+    public function destroy(Session $session, Request $request)
     {
         $session->delete();
+        $request->session()->flash('success', "Successfully deleted session!");
         return redirect('/session');
     }
 

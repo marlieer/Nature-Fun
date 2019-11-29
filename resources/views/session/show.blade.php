@@ -2,14 +2,14 @@
 @section('title', $session->title)
 @section('h1', 'Class List')
 @section('content')
-<br>
+
 <div class="text-right">
 	<a href="/session/showbydate/{{ $session->date }}">View whole day</a>
 </div>
 <p>Date: {{ date('F j, Y', strtotime($session->date)) }}</p>
 <p>Time: {{ date('g:i a', strtotime($session->start_time)) }} to {{ date('g:i a', strtotime($session->end_time)) }}</p>
 
-<table style = "width:100%">
+<table class="table table-bordered">
 	<tr>
 		<th>Remove</th>
 		<th>Child</th>
@@ -37,14 +37,38 @@
 				cursor: pointer;">Remove</button>
 			</form>
 		</td>
-		<td>{{ $child->child_name }}</td>
+		<td>{{ $child->child_name }} {{ $child->last_name }}</td>
 		<td>{{ $child->age }} </td>
 		<td>{{ $child->phone }}</td>
 		<td>{{ $child->allergy_info }}</td>
 		<td>{{ $child->notes }}</td>
 		<td>{{ $child->is_paid }}</td>
 		@endforeach
-	</table>
+	</tr>
+	@foreach ($otherChildren as $child)
+	<tr>
+		<td>
+			<form method="POST" action="/registration/{{$child->r_id}}">
+				@method('DELETE')
+				@csrf
+				<button onclick="return confirm('Are you sure?')" type="submit" style="background: none!important;
+				border: none;
+				padding: 0!important;
+				font-family: arial, sans-serif;
+				color: #069;
+				text-decoration: underline;
+				cursor: pointer;">Remove</button>
+			</form>
+		</td>
+		<td>{{ $child->child_name }} {{ $child->last_name }}</td>
+		<td>{{ $child->age }} </td>
+		<td>{{ $child->phone }}</td>
+		<td>{{ $child->allergy_info }}</td>
+		<td>{{ $child->notes }}</td>
+		<td>{{ $child->is_paid }}</td>
+		@endforeach
+	</tr>
+</table>
 
 <br>
 <hr>

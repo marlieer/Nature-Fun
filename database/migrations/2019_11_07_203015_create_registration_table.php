@@ -15,8 +15,8 @@ class CreateRegistrationTable extends Migration
     {
         Schema::create('registration', function (Blueprint $table) {
             $table->bigIncrements('r_id');
-            $table->bigInteger('s_id');
-            $table->bigInteger('c_id');
+            $table->unsignedInteger('s_id');
+            $table->unsignedInteger('c_id');
             $table->boolean('is_paid')->nullable()->default('f');
             $table->timestamps();
         });

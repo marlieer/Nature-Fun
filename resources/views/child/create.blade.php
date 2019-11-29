@@ -7,16 +7,6 @@
 	<div id="myBar" style="width:100%">Step 3 of 3</div>
 </div>
 
-@if ($errors->any())
-<div class="alert">
-	<ul>
-		@foreach($errors->all() as $error)
-		<li>{{$error}}</li>
-		@endforeach
-	</ul>			
-</div>
-@endif
-
 <form method="POST" action="/child">
 	{{csrf_field()}}
 	<div class="container">

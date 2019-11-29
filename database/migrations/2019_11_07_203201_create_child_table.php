@@ -20,7 +20,7 @@ class CreateChildTable extends Migration
             $table->string('allergy_info')->nullable();
             $table->string('notes')->nullable();
             $table->date('birthdate');
-            $table->bigInteger('f_id');
+            $table->unsignedInteger('f_id');
             $table->timestamps();
         });
     }

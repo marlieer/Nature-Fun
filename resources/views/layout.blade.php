@@ -3,13 +3,12 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Nature Fun')</title>
-    @toastr_css
+
+    <!--Style-->
+    @yield('header')
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Print -->
-    <link href="/public/css/print.css" rel="stylesheet" media="print" type="text/css">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -17,18 +16,13 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="{{ url('/css/style.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
 
-    <div class="content">
-       <div class="title m-b-md">
-           @yield('h1')
-       </div>
-   </div>
 
 </head>
 <body>
-	<div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -44,11 +38,18 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/session">Summer Schedule</a>
                         </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="/contact_us">Contact Us</a>
+                        </li>
                         @if (Auth::check())
                         @if (Auth::user()->id == 1)
                         <li class="nav-item">
                             <a class="nav-link" href="/session/create">Create Sessions</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/child">Search For Children</a>
+                        <li class="nav-item">
+                        <a class="nav-link" href="/family">Search For Families</a>
                         @else 
                         <li class="nav-item">
                             <a class="nav-link" href="/registration">
@@ -97,12 +98,34 @@
             </div>
         </div>
     </nav>
-</div>
+    
+       <h1 style=" text-align: center; padding-top: 15px ;">@yield('h1')</h1>
+
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <div class="container-fluid">
+    @if ($errors->any())
+@foreach($errors->all() as $error)
+<div class="alert alert-danger">
+    <p>
+        {{ $error }}
+    </p>           
+</div>
+@endforeach
+@endif
+
+@if (Session::has('success'))
+    <div class="alert alert-success">
+        <ul>
+            <li>{{ \Session::get('success') }}</li>
+        </ul>
+    </div>
+@endif
+<br>
+
 @yield('content')
 </div>
 

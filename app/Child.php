@@ -13,4 +13,24 @@ class Child extends Model
       protected $fillable = [
      	'child_name', 'med_num', 'allergy_info', 'notes','birthdate','f_id'
      ];
+
+     public function family()
+     {
+     	return Family::find($this->f_id);
+     }
+
+     public function registration()
+     {
+     	return Registration::get()->where('c_id',$this->c_id);
+     }
+
+     public function user()
+     {
+          return User::find($this->f_id);
+     }
+
+     public function age()
+     {
+          return (new DateTime($this->birthdate))->diff(new DateTime())->y;
+     }
 }
