@@ -14,7 +14,7 @@ html, body {
 }
 .full-height {
     height: 100vh;
-    
+
 }
 
 .flex-center {
@@ -88,7 +88,7 @@ input[type=checkbox]{
 textarea{
     display: block;
     width: 75%;
-    
+
 }
 select{
     width: 60%;
@@ -96,7 +96,7 @@ select{
     margin: 5px 0 22px 0;
     border: none;
     background: #f1f1f1;
-    
+
 }
 
 table, td, th {
@@ -142,7 +142,7 @@ span {
   padding: 16px 20px;
   margin: 8px 0;
   border: 1px solid;
-  border-color: #336699
+  border-color: #336699;
   cursor: pointer;
   width: 100%;
   opacity: 0.9;

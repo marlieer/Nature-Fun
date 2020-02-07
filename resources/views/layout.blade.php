@@ -50,7 +50,7 @@
                             <a class="nav-link" href="/child">Search For Children</a>
                         <li class="nav-item">
                         <a class="nav-link" href="/family">Search For Families</a>
-                        @else 
+                        @else
                         <li class="nav-item">
                             <a class="nav-link" href="/registration">
                             My Registered Sessions</a>
@@ -98,7 +98,7 @@
             </div>
         </div>
     </nav>
-    
+
        <h1 style=" text-align: center; padding-top: 15px ;">@yield('h1')</h1>
 
 
@@ -112,7 +112,7 @@
 <div class="alert alert-danger">
     <p>
         {{ $error }}
-    </p>           
+    </p>
 </div>
 @endforeach
 @endif
@@ -120,7 +120,7 @@
 @if (Session::has('success'))
     <div class="alert alert-success">
         <ul>
-            <li>{{ \Session::get('success') }}</li>
+            <li>{{ Session::get('success') }}</li>
         </ul>
     </div>
 @endif
