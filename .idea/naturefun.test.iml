@@ -103,5 +103,7 @@
     <orderEntry type="module" module-name="COSC360" />
     <orderEntry type="module" module-name="Lab-4-Starter-Code" />
     <orderEntry type="module" module-name="videos" />
+    <orderEntry type="module" module-name="Lab-5" />
+    <orderEntry type="module" module-name="htdocs" />
   </component>
 </module>
