@@ -100,10 +100,12 @@
     <orderEntry type="module" module-name="In Class" />
     <orderEntry type="module" module-name="Lab-2-Marlie-Russell" />
     <orderEntry type="module" module-name="Lab 3-Marlie Russell" />
-    <orderEntry type="module" module-name="COSC360" />
+    <orderEntry type="module" module-name="Project" />
     <orderEntry type="module" module-name="Lab-4-Starter-Code" />
     <orderEntry type="module" module-name="videos" />
     <orderEntry type="module" module-name="Lab-5" />
+    <orderEntry type="module" module-name="lab-6-starter-code" />
+    <orderEntry type="module" module-name="COSC360" />
     <orderEntry type="module" module-name="htdocs" />
   </component>
 </module>

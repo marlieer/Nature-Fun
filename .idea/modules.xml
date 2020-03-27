@@ -2,13 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/PhpstormProjects/COSC360/.idea/COSC360.iml" filepath="$USER_HOME$/PhpstormProjects/COSC360/.idea/COSC360.iml" />
+      <module fileurl="file://C:/xampp/htdocs/COSC360/.idea/COSC360.iml" filepath="C:/xampp/htdocs/COSC360/.idea/COSC360.iml" />
       <module fileurl="file://$USER_HOME$/Documents/School/2019-2020/COSC 360/In Class/.idea/In Class.iml" filepath="$USER_HOME$/Documents/School/2019-2020/COSC 360/In Class/.idea/In Class.iml" />
       <module fileurl="file://$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/Lab 3-Marlie Russell/.idea/Lab 3-Marlie Russell.iml" filepath="$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/Lab 3-Marlie Russell/.idea/Lab 3-Marlie Russell.iml" />
       <module fileurl="file://$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/Lab-2-Marlie-Russell/.idea/Lab-2-Marlie-Russell.iml" filepath="$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/Lab-2-Marlie-Russell/.idea/Lab-2-Marlie-Russell.iml" />
       <module fileurl="file://$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/Lab-4-Starter-Code/.idea/Lab-4-Starter-Code.iml" filepath="$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/Lab-4-Starter-Code/.idea/Lab-4-Starter-Code.iml" />
       <module fileurl="file://$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/Lab-5/.idea/Lab-5.iml" filepath="$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/Lab-5/.idea/Lab-5.iml" />
+      <module fileurl="file://C:/xampp/htdocs/COSC360/Project/.idea/Project.iml" filepath="C:/xampp/htdocs/COSC360/Project/.idea/Project.iml" />
       <module fileurl="file://C:/xampp/htdocs/.idea/htdocs.iml" filepath="C:/xampp/htdocs/.idea/htdocs.iml" />
+      <module fileurl="file://$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/lab-6-starter-code/.idea/lab-6-starter-code.iml" filepath="$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/lab-6-starter-code/.idea/lab-6-starter-code.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/naturefun.test.iml" filepath="$PROJECT_DIR$/.idea/naturefun.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/../videos/.idea/videos.iml" filepath="$PROJECT_DIR$/../videos/.idea/videos.iml" />
     </modules>
