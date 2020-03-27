@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/', 'PagesController@welcome');
 Route::get('/home','HomeController@index');
 Route::get('/contact_us', function() {

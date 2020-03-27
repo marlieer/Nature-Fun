@@ -1,3 +1,4 @@
+<?php use Illuminate\Support\Facades\Auth; ?>
 @extends('layout')
 @section('title', 'Registration')
 @section('h1', 'Register for Sessions')
@@ -20,7 +21,7 @@
 		<ul id="children">
 			@foreach ($children as $child)
 			<li style="display: none;"><div><input type="checkbox" value="{{ $child->c_id }}" name="{{ $child->c_id }}"/>{{ $child->child_name }} {{ $child->last_name }}</div></li>
-			@endforeach	
+			@endforeach
 		</ul>
 
 		<button style="width:40%" type="submit" name="sessionbtn" class="btn btn-success">Register

@@ -5,7 +5,7 @@
     overflow: hidden;
     background-size: cover;
     background-position: center;
-    background-image: url('../../public/images/butterfly_trail.jpg');
+    background-image: url('images/butterfly_trail.jpg');
 }
 </style>
 @endsection

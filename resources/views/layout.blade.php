@@ -1,3 +1,6 @@
+<?php use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
+?>
 <!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
@@ -22,7 +25,7 @@
 </head>
 <body>
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <nav class="skinny navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

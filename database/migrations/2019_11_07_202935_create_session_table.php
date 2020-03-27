@@ -19,10 +19,10 @@ class CreateSessionTable extends Migration
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
-            $table->integer('max_attendance');
-            $table->integer('min_age');
-            $table->integer('max_age');
-            $table->boolean('is_full');
+            $table->integer('max_attendance')->nullable();
+            $table->integer('min_age')->nullable();
+            $table->integer('max_age')->nullable();
+            $table->boolean('is_full')->nullable()->default('false');
             $table->timestamps();
         });
     }
