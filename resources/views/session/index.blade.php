@@ -6,7 +6,7 @@
 @section('content')
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
 
-<div class="hidden-sm hidden-xs">
+<div class="container-fluid">
 	<p> If there are no spots available, please phone or email to register on our waitlist. We'll contact you if a spot opens up.</p>
 </div>
 <div class="container">
