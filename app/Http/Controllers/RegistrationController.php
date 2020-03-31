@@ -42,6 +42,9 @@ class RegistrationController extends Controller
             }
 
             $children = Auth::user()->child();
+            foreach($children as $child){
+                $child->child_name = decrypt($child->child_name);
+            }
 
             return view('registration.create', compact('session'), compact('children'));
         }
