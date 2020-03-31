@@ -102,7 +102,7 @@ use Illuminate\Support\Facades\URL;
         </div>
     </nav>
 
-       <h1 style=" text-align: center; padding-top: 15px ;">@yield('h1')</h1>
+       <h1 class="hidden-sm hidden-xs" style=" text-align: center; padding-top: 15px ;">@yield('h1')</h1>
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

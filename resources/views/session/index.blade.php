@@ -1,20 +1,12 @@
 @extends('layout')
 @section('title', 'Schedule')
 @section('header')
-<style>
-    .fill {
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-    background-image: url('images/sprinkler.jpg');
-}
-</style>
 @endsection
 @section('h1', 'Our Summer Schedule')
 @section('content')
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
 
-<div class="container-fluid">
+<div class="hidden-sm hidden-xs">
 	<p> If there are no spots available, please phone or email to register on our waitlist. We'll contact you if a spot opens up.</p>
 </div>
 <div class="container">
@@ -27,13 +19,13 @@
 	<script>
 		$(document).ready(function() {
         // page is now ready, initialize the calendar...
-        
+
         @if($id==1){
         $('#calendar').fullCalendar({
             // put your options and callbacks here
-            
+
     		events : [
-            @foreach($sessions as $session){    		
+            @foreach($sessions as $session){
 	        		title:' {{ date('g', strtotime($session->start_time)) }}{{ ltrim(date('i', strtotime($session->start_time)), 0) }}-{{ date('g', strtotime($session->end_time)) }}{{ ltrim(date('i', strtotime($session->start_time)), 0) }} {{ date('a', strtotime($session->end_time)) }} \n {{ $session->max_attendance - $spotsAvailable[$session->s_id] }} / {{ $session->max_attendance }} spots filled!',
 	        		start : '{{ $session->date }}',
 	        		url : 'session/{{$session->s_id}}',
@@ -43,16 +35,16 @@
 	        @endforeach
 
             ]
-            
+
         })
     	}
-    	
+
     	@else{
     		 $('#calendar').fullCalendar({
             // put your options and callbacks here
-            
+
     		events : [
-            @foreach($sessions as $session){    		
+            @foreach($sessions as $session){
 	        		title:' {{ date('g', strtotime($session->start_time)) }}{{ ltrim(date('i', strtotime($session->start_time)), 0) }}-{{ date('g', strtotime($session->end_time)) }}{{ ltrim(date('i', strtotime($session->start_time)), 0) }} {{ date('a', strtotime($session->end_time)) }} \n {{ $spotsAvailable[$session->s_id] }} spots left!',
 	        		start : '{{ $session->date }}',
 	        		url : 'registration/{{ $session->s_id }}/create',
@@ -62,7 +54,7 @@
 	        @endforeach
 
             ]
-            
+
         })
     	}
     	@endif
