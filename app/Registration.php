@@ -50,7 +50,7 @@ class Registration extends Model
         $success = 'Successfully registered';
 
         foreach($children as $child){
-
+            $child->child_name = decrypt($child->child_name);
             // get the c_id passed through the request. Store as id
             $id = request($child->c_id);
 
@@ -64,13 +64,13 @@ class Registration extends Model
 
                 // check that session is not full
                 elseif($session->is_full == 't')
-                    $errors[] ="This session is now full. $child->child_name could not be registered";      
+                    $errors[] ="This session is now full. $child->child_name could not be registered";
 
                 // check if child is already registered in the class
                 elseif(in_array($child->c_id, $list))
                    $errors[] = "$child->child_name is already registered in this session";
 
-                // if no validation failures, register child  
+                // if no validation failures, register child
                 else{
                     $registration = Registration::create([
                         's_id'=>request('s_id'),
