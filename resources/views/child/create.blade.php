@@ -27,6 +27,13 @@
 			<input type="date" name="birthdate" value="{{old('birthdate')}}"required/>
 		</span>
 
+        <span>
+			<label for="can_take_photos"><b>Can we take photos of your child?</b>
+			</label>
+			<input type="radio" name="can_take_photos" value="1" required/>Yes
+            <input type="radio" name="can_take_photos" value="0" required/>No
+		</span>
+
 		<span>
 			<label for="allergy_info"><b>Allergy Information</b>
 			</label>

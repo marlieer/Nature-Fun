@@ -33,7 +33,7 @@ class ChildController extends Controller
             'child_name'=>'required',
             'birthdate'=>['required','date'],
             'allergy_info'=>'max:250',
-            'canTakePhotos'=>['required','boolean'],
+            'can_take_photos'=>['required','boolean'],
             'notes'=>'max:250'
         ]);
 

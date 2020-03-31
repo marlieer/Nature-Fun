@@ -11,7 +11,7 @@ class Child extends Model
      public $timestamps = false;
 
       protected $fillable = [
-     	'child_name', 'allergy_info', 'notes','birthdate','f_id'
+     	'child_name', 'allergy_info', 'notes','birthdate','f_id', 'can_take_photos'
      ];
 
 
