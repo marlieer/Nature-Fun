@@ -16,6 +16,9 @@ class RegistrationController extends Controller
         if(Auth::check())
         {
             $children = Auth::user()->child();
+            foreach($children as $child){
+                $child->child_name = decrypt($child->child_name);
+            }
             $registrations = Auth::user()->registrations();
             return view('registration/index', compact('children','registrations'));
         }
@@ -32,6 +35,9 @@ class RegistrationController extends Controller
                 $children = Child::join('users','child.f_id','=','users.id')
                     ->select('c_id','child_name','last_name')
                     ->get();
+                foreach($children as $child){
+                    $child->child_name = decrypt($child->child_name);
+                }
                 return view('registration.createAsAdmin', compact('session', 'children'));
             }
 
@@ -61,6 +67,9 @@ class RegistrationController extends Controller
         ]);
 
         $children = Child::all();
+        foreach($children as $child){
+            $child->child_name = decrypt($child->child_name);
+        }
         return Registration::store($children, $request);
     }
 
@@ -95,6 +104,10 @@ class RegistrationController extends Controller
             if ($id != 1)
                 $children = $children->where('child.f_id', $id);
 
+            foreach($children as $child){
+                $child->child_name = decrypt($child->child_name);
+            }
+
             return view('registration.show', compact('registration', 'children', 'session', 'id'));
         }
         else return redirect()->route('login');
@@ -106,6 +119,8 @@ class RegistrationController extends Controller
         if(Auth::check()){
             $session = $registration->session();
             $child = $registration->child();
+            $child->child_name = decrypt($child->child_name);
+
             return view('registration.edit', compact('session','registration','child'));
         }
         else return redirect()->route('login');
@@ -116,6 +131,7 @@ class RegistrationController extends Controller
     {
         if (Auth::check()){
             $child = $registration->child();
+            $child->child_name = decrypt($child->child_name);
             $session = $registration->session();
             $success = '';
             if($registration->c_id)
