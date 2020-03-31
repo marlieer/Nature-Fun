@@ -11,13 +11,9 @@ class Child extends Model
      public $timestamps = false;
 
       protected $fillable = [
-     	'child_name', 'med_num', 'allergy_info', 'notes','birthdate','f_id'
+     	'child_name', 'allergy_info', 'notes','birthdate','f_id'
      ];
 
-     public function family()
-     {
-     	return Family::find($this->f_id);
-     }
 
      public function registration()
      {

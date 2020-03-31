@@ -19,14 +19,14 @@
 @section('content')
 
 
-<div class="wrapper">
+<div class="class="col-lg-8 col-md-10 col-sm-12"">
         <p>Search for Families in the System: </p>
 
         <input id="searchFamily" onkeyup="myFunction()" class="form-control" type="text" placeholder="Search" aria-label="Search"/>
         <ul id="families">
             @foreach ($families as $family)
-            <li style="display:none;"><div><a href="#" id="{{ $family->f_id }}" value="{{ $family->f_id }}" onclick="showFamilies('{{$family->f_id}}');">{{ $family->first_name }} {{ $family->last_name }}</a></div></li>
-            @endforeach 
+            <li style="display:none;"><div><a href="#" id="{{ $family->id }}" value="{{ $family->id }}" onclick="showFamilies('{{$family->id}}');">{{ $family->first_name }} {{ $family->last_name }}</a></div></li>
+            @endforeach
         </ul>
 
 </div>
@@ -57,19 +57,18 @@ function showFamilies(id) {
     var index, families, family, info, children, familychildren;
     families = @json($families);
     children = @json($children);
-    
-    family = families.filter(f => f.f_id === parseInt(id))[0];
+
+    family = families.filter(f => f.id === parseInt(id))[0];
     familychildren = children.filter(c =>c.f_id === parseInt(id));
-    
+
     info = "Name: " +family.first_name + " " + family.last_name;
     info += "\nPhone: " + family.phone;
     info += "\nEmail: " + family.email;
-    info += "\nEmergency Contact: " + family.emerg_contact + " " + family.emerg_phone;
 
     familychildren.forEach(child =>
       info += "\nChild: " + child.child_name
     );
-  
+
     window.alert(info);
 }
 </script>

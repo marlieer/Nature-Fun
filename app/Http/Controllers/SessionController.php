@@ -3,11 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Session;
-use App\Registration;
-use App\Family;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 

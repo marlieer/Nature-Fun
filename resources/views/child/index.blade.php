@@ -19,14 +19,14 @@
 @section('content')
 
 
-<div class="wrapper">
+<div class="col-lg-8 col-md-10 col-sm-12">
         <p>Search for Child in the System: </p>
 
         <input id="searchChild" onkeyup="myFunction()" class="form-control" type="text" placeholder="Search" aria-label="Search"/>
         <ul id="children">
             @foreach ($children as $child)
             <li style="display: none;"><div><a href="#" id="{{ $child->c_id }}" value="{{ $child->c_id }}" onclick="showChild('{{$child->c_id}}');">{{ $child->child_name }} {{ $child->last_name }}</a></div></li>
-            @endforeach 
+            @endforeach
         </ul>
 
 </div>
@@ -61,7 +61,6 @@ function showChild(id) {
     info += "\nFamily: " +child.first_name + " " + child.last_name;
     info += "\nPhone: " + child.phone;
     info += "\nEmail: " + child.email;
-    info += "\nEmergency Contact: " + child.emerg_contact + " " + child.emerg_phone;
     info += "\nAllergies: " + child.allergy_info;
     info += "\nNotes: " + child.notes;
     info += "\nCan take photos? " + child.can_take_photos;

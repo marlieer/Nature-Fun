@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Registration;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Session;
-use App\Family;
 use App\Child;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class RegistrationController extends Controller
 {
@@ -19,20 +16,20 @@ class RegistrationController extends Controller
         if(Auth::check())
         {
             $children = Auth::user()->child();
-            $registrations = Auth::user()->family()->registrations();
+            $registrations = Auth::user()->registrations();
             return view('registration/index', compact('children','registrations'));
         }
         return redirect()->route('login');
     }
 
-   
+
     public function create($s_id)
     {
         if (Auth::check()){
             $session = Session::findOrFail($s_id);
 
             if(Auth::user()->id == 1){
-                $children = Child::join('family','child.f_id','=','family.f_id')
+                $children = Child::join('users','child.f_id','=','users.id')
                     ->select('c_id','child_name','last_name')
                     ->get();
                 return view('registration.createAsAdmin', compact('session', 'children'));
@@ -52,7 +49,7 @@ class RegistrationController extends Controller
             's_id'=>'required|exists:session,s_id',
         ]);
         $children = Auth::user()->child();
-        
+
         return Registration::store($children, $request);
     }
 
@@ -80,7 +77,7 @@ class RegistrationController extends Controller
         ]);
 
         $success = "Successfully registered $request->child_name";
-        $registration = Registration::create($attributes);
+        Registration::create($attributes);
         $session->updateIsFull();
 
         $request->session()->flash('success', $success);
@@ -94,16 +91,16 @@ class RegistrationController extends Controller
             $id = Auth::user()->id;
             $session = $registration->session();
             $children =  $registration->children();
-           
+
             if ($id != 1)
                 $children = $children->where('child.f_id', $id);
-            
+
             return view('registration.show', compact('registration', 'children', 'session', 'id'));
         }
         else return redirect()->route('login');
     }
 
-    
+
     public function edit(Registration $registration)
     {
         if(Auth::check()){
@@ -114,7 +111,7 @@ class RegistrationController extends Controller
         else return redirect()->route('login');
     }
 
-    
+
     public function destroy(Registration $registration, Request $request)
     {
         if (Auth::check()){
@@ -138,7 +135,7 @@ class RegistrationController extends Controller
 
             // if cancellation request is within 24 hours of the session, throw error.
             elseif ($session->date >= date('Y-m-d', time() - 60*60*24)) {
-        
+
                 return redirect("/registration/$registration->r_id/edit")->withErrors($errors);
             }
 

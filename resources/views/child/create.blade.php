@@ -4,7 +4,7 @@
 @section('content')
 
 <div id="myProgress">
-	<div id="myBar" style="width:100%">Step 3 of 3</div>
+	<div id="myBar" style="width:100%">Step 2 of 2</div>
 </div>
 
 <form method="POST" action="/child">
@@ -26,13 +26,6 @@
 			</label>
 			<input type="date" name="birthdate" value="{{old('birthdate')}}"required/>
 		</span>
-
-		<span>
-			<label for="med_num"><b>Medical Number</b>
-			</label>
-			<input type="text" placeholder="Medical Number" name="med_num" value="{{old('med_num')}}"/>
-		</span>
-
 
 		<span>
 			<label for="allergy_info"><b>Allergy Information</b>

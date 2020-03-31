@@ -16,10 +16,10 @@ class CreateChildTable extends Migration
         Schema::create('child', function (Blueprint $table) {
             $table->bigIncrements('c_id');
             $table->string('child_name');
-            $table->string('med_num')->nullable();
             $table->string('allergy_info')->nullable();
             $table->string('notes')->nullable();
             $table->date('birthdate');
+            $table->boolean('can_take_photos');
             $table->unsignedInteger('f_id');
             $table->timestamps();
         });

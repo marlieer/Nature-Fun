@@ -19,9 +19,6 @@ Route::get('/contact_us', function() {
 	return view('contact_us');
 });
 
-Route::post('/family2', 'FamilyController@store2');
-Route::get('/family/create2','FamilyController@create2');
-
 Route::resource('session','SessionController');
 Route::resource('registration','RegistrationController');
 Route::resource('child','ChildController');
@@ -33,4 +30,9 @@ Route::get('/registration/{session}/create','RegistrationController@create');
 Route::post('/registrationAsAdmin','RegistrationController@storeAsAdmin');
 Route::post('/manualRegistration','RegistrationController@storeManual');
 
-Auth::routes();
+
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::get('register', 'FamilyController@create')->name('register');
+Route::post('register', 'Auth\RegisterController@register');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');

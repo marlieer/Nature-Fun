@@ -4,7 +4,7 @@
 @section('content')
 
 	<div id="myProgress">
-		<div id="myBar" style="width:33%">Step 1 of 3</div>
+		<div id="myBar" style="width:50%">Step 1 of 2</div>
 	</div>
 	@if ($errors->Unique())
 		<div class="alert alert-danger">
@@ -13,7 +13,7 @@
 		</div>
 	@endif
 
-	<form method="POST" action="/family">
+	<form method="POST" action="/register">
 		{{csrf_field()}}
 		<div class="container">
 			<h2>First, we need some basic family information...</h2>
@@ -28,7 +28,7 @@
 
 				<span><label for="email"><b>Email</b></label>
 				<input type="Email" placeholder="Enter Email" name="email" required value="{{ old('email')}}"></span>
-				
+
 				<span><label for="phone"><b>Phone Number</b></label>
 					<small>Format: 123-456-7890</small>
 				<input type="tel" placeholder="Format: 123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" required value="{{ old('phone')}}"></span>

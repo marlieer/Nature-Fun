@@ -39,9 +39,9 @@ class Session extends Model
      {
           return DB::table('child')
             ->join('registration','child.c_id','=','registration.c_id')
-            ->join('family','child.f_id','=','family.f_id')
+            ->join('users','child.f_id','=','users.id')
             ->where('registration.s_id',$this->s_id)
-            ->select('child.*','registration.r_id','registration.c_id','registration.is_paid','registration.s_id','family.phone','family.last_name')
+            ->select('child.*','registration.r_id','registration.c_id','registration.is_paid','registration.s_id','users.phone','users.last_name')
             ->get();
      }
 
@@ -54,8 +54,8 @@ class Session extends Model
 
         if (request('end_repeat')){
             $end_repeat = new DateTime(request('end_repeat'));
-            
-            
+
+
             if (request('mon')=='mon'){
                 $date = new DateTime($start_date);
                 $date ->modify('next Monday')->format('Y-m-d');

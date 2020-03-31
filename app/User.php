@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','id'
+        'first_name', 'last_name','email', 'password', 'phone','id'
     ];
 
     /**
@@ -38,13 +39,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function family()
-    {
-        return Family::find($this->id);
-    }
 
     public function child()
     {
         return Child::get()->where('f_id',$this->id);
+    }
+
+    public function registrations()
+    {
+        return DB::table('child')
+            ->join('registration','registration.c_id','child.c_id')
+            ->join('family','family.f_id','child.f_id')
+            ->join('session','session.s_id','registration.s_id')
+            ->where('family.f_id', $this->f_id)
+            ->select('child.*','session.*','registration.*')
+            ->get();
     }
 }
