@@ -28,7 +28,7 @@
             @foreach($sessions as $session){
 	        		title:' {{ date('g', strtotime($session->start_time)) }}{{ ltrim(date('i', strtotime($session->start_time)), 0) }}-{{ date('g', strtotime($session->end_time)) }}{{ ltrim(date('i', strtotime($session->start_time)), 0) }} {{ date('a', strtotime($session->end_time)) }} \n {{ $session->max_attendance - $spotsAvailable[$session->s_id] }} / {{ $session->max_attendance }} spots filled!',
 	        		start : '{{ $session->date }}',
-	        		url : 'session/{{$session->s_id}}',
+	        		url : 'session/{{$session->id}}',
 	        		color: '#22822E',
 	        		textColor: 'white'
           	},
@@ -47,7 +47,7 @@
             @foreach($sessions as $session){
 	        		title:' {{ date('g', strtotime($session->start_time)) }}{{ ltrim(date('i', strtotime($session->start_time)), 0) }}-{{ date('g', strtotime($session->end_time)) }}{{ ltrim(date('i', strtotime($session->start_time)), 0) }} {{ date('a', strtotime($session->end_time)) }} \n {{ $spotsAvailable[$session->s_id] }} spots left!',
 	        		start : '{{ $session->date }}',
-	        		url : 'registration/{{ $session->s_id }}/create',
+	        		url : 'registration/{{ $session->id }}/create',
 	        		color:'#22822E',
 	        		textColor: 'white'
           	},

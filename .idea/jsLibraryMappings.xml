@@ -3,6 +3,7 @@
   <component name="JavaScriptLibraryMappings">
     <file url="file://$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/Lab-5" libraries="{jquery-1.9.1}" />
     <file url="file://$USER_HOME$/Documents/School/2019-2020/COSC 360/Labs/lab-6-starter-code" libraries="{jquery}" />
+    <file url="file://$PROJECT_DIR$" libraries="{fullcalendar, jquery-1.11.3, moment}" />
     <file url="file://C:/xampp/htdocs" libraries="{bootstrap, jquery-3.4.1.slim, popper}" />
   </component>
 </project>

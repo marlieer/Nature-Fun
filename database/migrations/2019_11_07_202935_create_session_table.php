@@ -14,7 +14,7 @@ class CreateSessionTable extends Migration
     public function up()
     {
         Schema::create('session', function (Blueprint $table) {
-            $table->bigIncrements('s_id');
+            $table->bigIncrements('id');
             $table->string('title')->nullable();
             $table->date('date');
             $table->time('start_time');

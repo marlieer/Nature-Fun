@@ -1,56 +1,141 @@
 @extends('layout')
 @section('title', 'Child Sign Up')
-@section('h1','Nature Fun Sign Up')
+@section('h1','Add Child to Your Account')
 @section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
 
-<div id="myProgress">
-	<div id="myBar" style="width:100%">Step 2 of 2</div>
-</div>
+                    <form method="POST" action="{{ route('child.store') }}">
+                        <div class="container">
+                            @csrf
 
-<form method="POST" action="/child">
-	{{csrf_field()}}
-	<div class="container">
-		<h2>Please fill in your child's information</h2>
-		<p>If you want to sign up additional children, go to your profile to add them after submitting this form.</p>
+                            <div class="form-group row">
+                                <label for="name"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Child\'s Name') }}
+                                </label>
+                                <div class="col-md-6">
+                                    <input id="name"
+                                           type="text"
+                                           class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                           name="name"
+                                           value="{{ old('name') }}"
+                                           required
+                                           autofocus>
 
-		<hr>
+                                    @if ($errors->has('name'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
 
-		<span>
-			<label for="child_name"><b>Name</b>
-			</label>
-			<input type="text" placeholder="Enter Name" name="child_name" value="{{old('child_name')}}" required/>
-		</span>
+                            <div class="form-group row">
+                                <label for="birthdate"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Birth Date') }}
+                                </label>
+                                <div class="col-md-6">
+                                    <input id="birthdate"
+                                           type="date"
+                                           class="form-control{{ $errors->has('birthdate') ? ' is-invalid' : '' }}"
+                                           name="birthdate"
+                                           value="{{ old('birthdate') }}"
+                                           required
+                                           autofocus>
 
-		<span>
-			<label for="birthdate"><b>Birthdate (YYYY-MM-DD)</b>
-			</label>
-			<input type="date" name="birthdate" value="{{old('birthdate')}}"required/>
-		</span>
+                                    @if ($errors->has('birthdate'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('birthdate') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
 
-        <span>
-			<label for="can_take_photos"><b>Can we take photos of your child?</b>
-			</label>
-			<input type="radio" name="can_take_photos" value="1" required/>Yes
-            <input type="radio" name="can_take_photos" value="0" required/>No
-		</span>
+                            <div class="form-group row">
+                                <label for="can_take_photos"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Can we take photos of your child?') }}
+                                </label>
+                                <div class="col-md-6">
+                                    <input id="can_take_photos"
+                                           type="radio"
+                                           class="form-control{{ $errors->has('can_take_photos') ? ' is-invalid' : '' }}"
+                                           name="can_take_photos"
+                                           value="1"
+                                           {{ old('can_take_photos') == 1 ? 'checked' : ''}}
+                                           required
+                                           autofocus/>Yes
+                                    <input id="can_take_photos"
+                                           type="radio"
+                                           class="form-control{{ $errors->has('can_take_photos') ? ' is-invalid' : '' }}"
+                                           name="can_take_photos"
+                                           value="0"
+                                           {{ old('can_take_photos') == 0 ? 'checked' : ''}}
+                                           required
+                                           autofocus/>No
+                                </div>
 
-		<span>
-			<label for="allergy_info"><b>Allergy Information</b>
-			</label>
-			<input type="text" placeholder="Allergy information" name="allergy_info"
-			value="{{old('allergy_info')}}"/>
-		</span>
+                                    @if ($errors->has('can_take_photos'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('can_take_photos') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
 
-		<span>
-			<label for="notes"><b>Any other information we should know about? Ex. learning disabilities, behaviour problems or any other relavent information to help us better care for your child during Nature Fun.</b>
-			</label>
-			<input type="text" placeholder="Notes" name="notes" value="{{old('notes')}}"/>
-		</span>
+                            <div class="form-group row">
+                                <label for="allergy_info"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Allergy Information') }}
+                                </label>
+                                <div class="col-md-6">
+                                    <input id="allergy_info"
+                                           type="text"
+                                           class="form-control{{ $errors->has('allergy_info') ? ' is-invalid' : '' }}"
+                                           name="allergy_info"
+                                           value="{{ old('allergy_info') }}"
+                                           autofocus>
 
-		<hr>
+                                    @if ($errors->has('allergy_info'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('allergy_info') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
 
-		<button type="submit" name="regbtn" class="btn">Finish!</button>
+                            <div class="form-group row">
+                                <label for="notes"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Other Relevant Information') }}
+                                </label>
+                                <div class="col-md-6">
+                                    <textarea id="notes"
+                                              class="form-control{{ $errors->has('notes') ? ' is-invalid' : '' }}"
+                                              name="notes"
+                                              autofocus
+                                              placeholder="Ex. any kind of mental or physical disability"
+                                    >{{ old('notes') }}</textarea>
 
-	</div>
-</form>
+                                    @if ($errors->has('notes'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('notes') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-4">
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Save') }}
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

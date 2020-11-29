@@ -13,22 +13,19 @@ class RegistrationController extends Controller
 
     public function index()
     {
-        if(Auth::check())
         {
-            $children = Auth::user()->child();
+            $children = Auth::user()->children();
             foreach($children as $child){
                 $child->child_name = decrypt($child->child_name);
             }
             $registrations = Auth::user()->registrations();
             return view('registration/index', compact('children','registrations'));
         }
-        return redirect()->route('login');
     }
 
 
     public function create($s_id)
     {
-        if (Auth::check()){
             $session = Session::findOrFail($s_id);
 
             if(Auth::user()->id == 1){
@@ -47,17 +44,15 @@ class RegistrationController extends Controller
             }
 
             return view('registration.create', compact('session'), compact('children'));
-        }
-        else return redirect()->route('login');
     }
 
 
     public function store(Request $request)
     {
         $attributes = request()->validate([
-            's_id'=>'required|exists:session,s_id',
+            'session_id'=>'required|exists:session,id',
         ]);
-        $children = Auth::user()->child();
+        $children = Auth::user()->children();
 
         return Registration::store($children, $request);
     }
@@ -66,13 +61,10 @@ class RegistrationController extends Controller
     public function storeAsAdmin(Request $request)
     {
         $attributes = request()->validate([
-            's_id'=>'required|exists:session,s_id',
+            'session_id'=>'required|exists:session,id',
         ]);
-
         $children = Child::all();
-        foreach($children as $child){
-            $child->child_name = decrypt($child->child_name);
-        }
+
         return Registration::store($children, $request);
     }
 
@@ -145,17 +137,17 @@ class RegistrationController extends Controller
             $errors = ['We do not accept online cancellations within 24 hours of the session date. Please call Scout Island Nature Centre at 250-398-8532 to cancel. You will not be refunded.'];
 
             // if staff member is deleting, go ahead
-            if(Auth::user()->id == 1){
+            if(Auth::user()->isAdmin()){
              $registration->delete();
              $session->updateIsFull();
              $request->session()->flash('success', $success);
-             return redirect()->route('session.show',[$registration->s_id]);
+             return redirect()->route('session.show',[$registration->session_id]);
             }
 
             // if cancellation request is within 24 hours of the session, throw error.
             elseif ($session->date >= date('Y-m-d', time() - 60*60*24)) {
 
-                return redirect("/registration/$registration->r_id/edit")->withErrors($errors);
+                return redirect("/registration/$registration->id/edit")->withErrors($errors);
             }
 
             // otherwise, delete from session and update is_full

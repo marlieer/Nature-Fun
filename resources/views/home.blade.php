@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <ul>
                         @foreach ($children as $child)
-                            <li>{{ $child->child_name }}</li>
+                            <li>{{ $child->name }}</li>
                         @endforeach
                         <li><a href="/child/create">Add Child</a></li>
                     </ul>

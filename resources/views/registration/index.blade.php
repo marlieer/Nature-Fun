@@ -23,7 +23,7 @@
                 {
                     title : '{{ date('g', strtotime($reg->start_time)) }}{{ ltrim(date('i', strtotime($reg->start_time)), 0) }}-{{ date('g', strtotime($reg->end_time)) }}{{ ltrim(date('i', strtotime($reg->start_time)), 0) }} {{ date('a', strtotime($reg->end_time)) }} \n {{ $reg->child_name }}',
                     start : '{{ $reg->date }}',
-                    url : '{{ route('registration.edit', $reg->r_id) }}',
+                    url : '{{ route('registration.edit', $reg->id) }}',
                     color:'#174960',
                     textColor:'white'
                 },

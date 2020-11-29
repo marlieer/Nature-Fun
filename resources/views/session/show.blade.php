@@ -23,7 +23,7 @@
 	@foreach ($children as $child)
 	<tr>
 		<td>
-			<form method="POST" action="/registration/{{$child->r_id}}">
+			<form method="POST" action="/registration/{{$child->registration_id}}">
 				@method('DELETE')
 				@csrf
 				<button onclick="return confirm('Are you sure?')" type="submit" style="background: none!important;
@@ -37,7 +37,7 @@
 				cursor: pointer;">Remove</button>
 			</form>
 		</td>
-		<td>{{ $child->child_name }} {{ $child->last_name }}</td>
+		<td>{{ $child->name }} {{ $child->last_name }}</td>
 		<td>{{ $child->age }} </td>
 		<td>{{ $child->phone }}</td>
 		<td>{{ $child->allergy_info }}</td>
@@ -48,7 +48,7 @@
 	@foreach ($otherChildren as $child)
 	<tr>
 		<td>
-			<form method="POST" action="/registration/{{$child->r_id}}">
+			<form method="POST" action="/registration/{{$child->registration_id}}">
 				@method('DELETE')
 				@csrf
 				<button onclick="return confirm('Are you sure?')" type="submit" style="background: none!important;
@@ -60,7 +60,7 @@
 				cursor: pointer;">Remove</button>
 			</form>
 		</td>
-		<td>{{ $child->child_name }} {{ $child->last_name }}</td>
+		<td>{{ $child->name }} {{ $child->last_name }}</td>
 		<td>{{ $child->age }} </td>
 		<td>{{ $child->phone }}</td>
 		<td>{{ $child->allergy_info }}</td>
@@ -72,9 +72,9 @@
 
 <br>
 <hr>
-	<a href="/registration/{{ $session->s_id}}/create">Add Child to Session</a>
+	<a href="/registration/{{ $session->id}}/create">Add Child to Session</a>
 	<br>
-	<a style="text-align: center;" href="/session/{{ $session->s_id }}/edit">Edit Session Details</a>
+	<a style="text-align: center;" href="/session/{{ $session->id }}/edit">Edit Session Details</a>
 	<br>
 	<hr>
 	<a href="/session" class="btn btn-success" style="width:60%;">Back to Summer Schedule</a>

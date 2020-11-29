@@ -9,7 +9,6 @@ use DateTime;
 class Session extends Model
 {
      protected $table = 'session';
-     protected $primaryKey = 's_id';
      public $timestamps = false;
 
      protected $fillable = [
@@ -18,7 +17,7 @@ class Session extends Model
 
      public function registration()
      {
-     	return Registration::get()->where('s_id',$this->s_id);
+     	return $this->hasMany('App\Registration');
      }
 
      public function spotsAvailable()
@@ -29,8 +28,8 @@ class Session extends Model
      // children registered for a session but not signed up in the system
      public function childrenNotInTheSystem()
      {
-          return Registration::where('s_id',$this->s_id)
-                ->whereNull('c_id')
+          return Registration::where('session_id',$this->id)
+                ->whereNull('child_id')
                 ->get();
      }
 
@@ -38,10 +37,10 @@ class Session extends Model
      public function childrenInTheSystem()
      {
           return DB::table('child')
-            ->join('registration','child.c_id','=','registration.c_id')
-            ->join('users','child.f_id','=','users.id')
-            ->where('registration.s_id',$this->s_id)
-            ->select('child.*','registration.r_id','registration.c_id','registration.is_paid','registration.s_id','users.phone','users.last_name')
+            ->join('registration','child.id','=','registration.child_id')
+            ->join('users','child.user_id','=','users.id')
+            ->where('registration.session_id',$this->id)
+            ->select('child.*','registration.id','registration.child_id','registration.is_paid','registration.session_id','users.phone','users.last_name')
             ->get();
      }
 
@@ -117,11 +116,11 @@ class Session extends Model
      {
         $num_registered = count($this->registration());
         if ($num_registered >= $this->max_attendance){
-            $this->is_full='t';
+            $this->is_full=true;
             $this->save();
         }
         else {
-            $this->is_full = 'f';
+            $this->is_full = false;
             $this->save();
         }
      }

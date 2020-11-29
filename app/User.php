@@ -40,19 +40,24 @@ class User extends Authenticatable
     ];
 
 
-    public function child()
+    public function children()
     {
-        return Child::get()->where('f_id',$this->id);
+        return $this->hasMany('App\Child', 'user_id', 'id');
     }
 
     public function registrations()
     {
         return DB::table('child')
-            ->join('registration','registration.c_id','child.c_id')
-            ->join('family','family.f_id','child.f_id')
-            ->join('session','session.s_id','registration.s_id')
-            ->where('family.f_id', $this->f_id)
+            ->join('registration','registration.child_id','child.id')
+            ->join('users','users.id','child.user_id')
+            ->join('session','session.id','registration.session_id')
+            ->where('users.id', $this->id)
             ->select('child.*','session.*','registration.*')
             ->get();
+    }
+
+    public function isAdmin()
+    {
+        return $this->isAdmin;
     }
 }

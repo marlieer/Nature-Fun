@@ -25,7 +25,7 @@
         <input id="searchChild" onkeyup="myFunction()" class="form-control" type="text" placeholder="Search" aria-label="Search"/>
         <ul id="children">
             @foreach ($children as $child)
-            <li style="display: none;"><div><a href="#" id="{{ $child->c_id }}" value="{{ $child->c_id }}" onclick="showChild('{{$child->c_id}}');">{{ $child->child_name }} {{ $child->last_name }}</a></div></li>
+            <li style="display: none;"><div><a href="#" id="{{ $child->id }}" value="{{ $child->id }}" onclick="showChild('{{$child->id}}');">{{ $child->name }} {{ $child->last_name }}</a></div></li>
             @endforeach
         </ul>
 
@@ -56,8 +56,8 @@
 function showChild(id) {
     var index, children, child, info;
     children = @json($children);
-    child = children.filter(c => c.c_id === parseInt(id))[0];
-    info = "Child: " +child.child_name + " " + child.last_name;
+    child = children.filter(c => c.id === parseInt(id))[0];
+    info = "Child: " +child.name + " " + child.last_name;
     info += "\nFamily: " +child.first_name + " " + child.last_name;
     info += "\nPhone: " + child.phone;
     info += "\nEmail: " + child.email;

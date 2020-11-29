@@ -8,9 +8,9 @@
 
 	<p>{{ date('F j, Y', strtotime($session->date)) }}</p>
 	<p>{{ date('g:i a', strtotime($session->start_time)) }} to {{ date('g:i a', strtotime($session->end_time)) }}</p>
-	<p>{{ $child->child_name}}</p>
+	<p>{{ $child->name}}</p>
 
-	<form method="POST" action="/registration/{{$registration->r_id}}" style="margin-bottom: lem">
+	<form method="POST" action="/registration/{{$registration->id}}" style="margin-bottom: 1em">
 		@method('DELETE')
 		@csrf
 		<div class="field">

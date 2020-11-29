@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 
-class FamilyController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
@@ -21,17 +21,11 @@ class FamilyController extends Controller
             $families = User::all();
             $children = Child::all();
             foreach($children as $child){
-                $child->child_name = decrypt($child->child_name);
+                $child->name = decrypt($child->name);
             }
             return view('family/index', compact('families', 'children'));
         }
         return redirect()->route('login');
     }
-
-    public function create()
-    {
-        return view('family/create');
-    }
-
 
 }

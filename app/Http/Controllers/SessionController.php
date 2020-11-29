@@ -14,36 +14,31 @@ class SessionController extends Controller
     {
         $spotsAvailable = array();
         $sessions = Session::get();
-        foreach ($sessions as $s){
-            $spotsAvailable[$s->s_id] = $s->spotsAvailable();
+        foreach ($sessions as $s) {
+            $spotsAvailable[$s->id] = $s->spotsAvailable();
         }
 
-        $id=-1;
-        if (Auth::check())
-            $id = Auth::id();
-        return view('session.index', compact('sessions','spotsAvailable', 'id'));
+        $id = Auth::id() ?? -1;
+        return view('session.index', compact('sessions', 'spotsAvailable', 'id'));
     }
 
 
     public function create()
     {
-        if (Auth::id()==1)
-            return view('/session/create');
-        return redirect()->route('login');
+        return view('/session/create');
     }
 
 
     public function store(Request $request)
     {
-
         // if repeat boxes checked, create session for each repeat
-        $attributes = request()->validate(['session_date'=>['required','date'],
-            'end_repeat'=>'date|after:session_date',
-            'start_time'=>'date_format:H:i',
-            'end_time'=>'date_format:H:i|after:start_time',
-            'max_attendance'=>'numeric',
-            'max_age'=>'numeric',
-            'min_age'=>'numeric'
+        $attributes = request()->validate(['session_date' => ['required', 'date'],
+            'end_repeat' => 'date|after:session_date',
+            'start_time' => 'date_format:H:i',
+            'end_time' => 'date_format:H:i|after:start_time',
+            'max_attendance' => 'numeric',
+            'max_age' => 'numeric',
+            'min_age' => 'numeric'
         ]);
 
         Session::createSessions($attributes, $request);
@@ -54,80 +49,69 @@ class SessionController extends Controller
 
     public function show(Session $session)
     {
-        if (Auth::id()==1)
-        {
-            $children = $session->childrenInTheSystem();
-            $otherChildren = $session->childrenNotInTheSystem();
+        $children = $session->childrenInTheSystem();
+        $otherChildren = $session->childrenNotInTheSystem();
 
-            foreach ($children as $child){
-                $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
-            }
-
-            return view('session.show', compact('session','children','otherChildren'));
+        foreach ($children as $child) {
+            $child->age = (new DateTime($child->birthdate))->diff(new DateTime())->y;
         }
-        return redirect()->route('login');
+
+        return view('session.show', compact('session', 'children', 'otherChildren'));
     }
 
 
     public function showbydate(String $date)
     {
-        if (Auth::id()==1)
-        {
-            $sessions = Session::where('date',$date)->get();
-            $childrens = [];
-            $otherChildrens = [];
+        $sessions = Session::where('date', $date)->get();
+        $childrens = [];
+        $otherChildrens = [];
 
-            foreach($sessions as $session)
-            {
-                $children = $session->childrenInTheSystem();
-                $otherChildren = $session->childrenNotInTheSystem();
+        foreach ($sessions as $session) {
+            $children = $session->childrenInTheSystem();
+            $otherChildren = $session->childrenNotInTheSystem();
 
-                foreach($children as $child)
-                    $child->age=(new DateTime($child->birthdate))->diff(new DateTime())->y;
+            foreach ($children as $child)
+                $child->age = (new DateTime($child->birthdate))->diff(new DateTime())->y;
 
-                array_push($childrens, $children);
-                array_push($otherChildrens, $otherChildren);
-            }
-
-            return view('session.showbydate', compact('sessions','childrens','otherChildrens'));
+            array_push($childrens, $children);
+            array_push($otherChildrens, $otherChildren);
         }
-        return redirect()->route('login');
+
+        return view('session.showbydate', compact('sessions', 'childrens', 'otherChildrens'));
+
     }
 
 
     public function edit(Session $session)
     {
-        if(Auth::id()==1)
-            return view('session.edit', compact('session'));
-        return redirect()->route('login');
+        return view('session.edit', compact('session'));
     }
 
 
     public function update(Session $session, Request $request)
     {
 
-        $attributes = request()->validate(['session_date'=>['required','date'],
-            'end_repeat'=>'date',
-            'start_time'=>'required',
-            'end_time'=>'required|after:start_time',
-            'max_attendance'=>'numeric',
-            'max_age'=>'numeric',
-            'min_age'=>'numeric',
-            'title'=>'max:70'
+        $attributes = request()->validate(['session_date' => ['required', 'date'],
+            'end_repeat' => 'date',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
+            'max_attendance' => 'numeric',
+            'max_age' => 'numeric',
+            'min_age' => 'numeric',
+            'title' => 'max:70'
         ]);
 
-       $session->update($attributes);
-       $request->session()->flash('success', "Successfully updated!");
-        return redirect("/session/{$session->s_id}");
+        $session->update($attributes);
+        $request->session()->flash('success', "Successfully updated!");
+        return redirect("/session/{$session->id}");
 
     }
 
 
-    public function destroy(Session $session, Request $request)
+    public function destroy(Session $session)
     {
-        $session->delete();
-        $request->session()->flash('success', "Successfully deleted session!");
-        return redirect('/session');
+        Session::destroy($session->id);
+        return redirect('/session')->with('success', "Successfully deleted session!");
     }
 
 }

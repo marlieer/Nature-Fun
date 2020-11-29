@@ -25,11 +25,11 @@
 
 		@foreach ($childrens as $children)
 		@foreach($children as $child)
-		@if($child->s_id == $session->s_id)
+		@if($child->id == $session->id)
 		<tr>
 			<td>{{ $child->is_paid }}</td>
-			<td>  </td>			
-			<td>{{ $child->child_name }} {{$child->last_name}}</td>
+			<td>  </td>
+			<td>{{ $child->name }} {{$child->last_name}}</td>
 			<td>{{ $child->age }} </td>
 			<td>{{ $child->phone }}</td>
 			<td>{{ $child->allergy_info }}</td>
@@ -41,11 +41,11 @@
 
 			@foreach ($otherChildrens as $children)
 		@foreach($children as $child)
-		@if($child->s_id == $session->s_id)
+		@if($child->session_id == $session->id)
 		<tr>
 			<td>{{ $child->is_paid }}</td>
 			<td>  </td>
-			<td>{{ $child->child_name }}</td>
+			<td>{{ $child->name }}</td>
 			<td>{{ $child->age }} </td>
 			<td>{{ $child->phone }}</td>
 			<td>{{ $child->allergy_info }}</td>
@@ -54,7 +54,7 @@
 			@endif
 			@endforeach
 			@endforeach
-			
+
 		</table>
 		</div>
 	<br>

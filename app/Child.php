@@ -7,22 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 class Child extends Model
 {
      protected $table = 'child';
-     protected $primaryKey = 'c_id';
-     public $timestamps = false;
 
       protected $fillable = [
-     	'child_name', 'allergy_info', 'notes','birthdate','f_id', 'can_take_photos'
+     	'name', 'allergy_info', 'notes','birthdate','user_id', 'can_take_photos'
      ];
+
+
+      public function family()
+      {
+          $this->user();
+      }
 
 
      public function registration()
      {
-     	return Registration::get()->where('c_id',$this->c_id);
+     	return $this->hasMany('App\Registration');
      }
 
      public function user()
      {
-          return User::find($this->f_id);
+          $this->belongsTo('App\User', 'user_id', 'id');
      }
 
      public function age()

@@ -28,7 +28,7 @@
     <link rel ="stylesheet" type="text/css" href="/css/style.css"/>
 </head>
 <body>
-    
+
         <div class="fill">
        <div class="flex-center position-ref full-height">
         @if (Route::has('login'))
@@ -46,7 +46,7 @@
         </form>
         @else
         <a href="{{ route('login') }}">Login</a>
-        <a href="{{ url('/family/create') }}">Register</a>
+        <a href="{{ route('register') }}">Register</a>
         @endif
         @endauth
         </div>

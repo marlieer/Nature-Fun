@@ -8,31 +8,16 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function dashboard()
     {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        $children = Child::get()->where('f_id','=', Auth::user()->id);
+        $children = Auth::user()->children;
         foreach($children as $child){
-            $child->child_name = decrypt($child->child_name);
+            $child->name = decrypt($child->name);
         }
         $registrations = DB::table('child')
-            ->join('registration','registration.c_id','child.c_id')
-            ->join('users','users.id','child.f_id')
-            ->join('session','session.s_id','registration.s_id')
+            ->join('registration','registration.child_id','child.id')
+            ->join('users','users.id','child.user_id')
+            ->join('session','session.id','registration.session_id')
             ->where('session.date','>=', date('Y-m-d'))
             ->where('users.id',Auth::user()->id)
             ->select('child.*','session.*','registration.*')
