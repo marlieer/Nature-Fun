@@ -1,7 +1,6 @@
 @extends('layout')
 @section('title', 'Edit Registration')
 @section('content')
-@section('h1', 'Edit Registration')
 
 <p>If you're planning to cancel with less than 24 hour notice, you <strong>MUST</strong> call Scout Island Nature Centre at 250-398-8532 and you will not be refunded.</p>
 <div class="container-fluid">

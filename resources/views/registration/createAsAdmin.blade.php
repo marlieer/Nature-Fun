@@ -1,7 +1,6 @@
 <?php use Illuminate\Support\Facades\Auth; ?>
 @extends('layout')
 @section('title', 'Registration')
-@section('h1', 'Register for Sessions')
 @section('content')
 
     <p>{{ $session->title }}</p>

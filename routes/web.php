@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\Auth;
 
 
 // routes that do not require login
-Route::get('/', 'PagesController@welcome');
+Route::get('/', 'PagesController@welcome')->name('welcome');
 Route::get('/contact_us', function() {
 	return view('contact_us');
-});
+})->name('contact_us');
 
 
 // must be logged in to access these routes
@@ -28,6 +28,9 @@ Route::middleware('auth')->group( function() {
     // add a child to your account
     Route::get('/child/create', 'ChildController@create')->name('child.create');
     Route::post('child', 'ChildController@store')->name('child.store');
+
+    // view profile
+    Route::get('/profile', 'UserController@profile')->name('profile');
 
     // go to dashboard
     Route::get('/dashboard','HomeController@dashboard')->name('dashboard');

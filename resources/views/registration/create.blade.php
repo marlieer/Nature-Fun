@@ -1,6 +1,5 @@
 @extends('layout')
 @section('title', 'Registration')
-@section('h1', 'Register for Sessions')
 @section('content')
 
 <form method="POST" action="/registration">

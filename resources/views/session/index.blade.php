@@ -1,8 +1,5 @@
 @extends('layout')
 @section('title', 'Schedule')
-@section('header')
-@endsection
-@section('h1', 'Our Summer Schedule')
 @section('content')
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
 

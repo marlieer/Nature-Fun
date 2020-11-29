@@ -1,6 +1,5 @@
 @extends('layout')
 @section('title', 'Edit Sessions')
-@section('h1', 'Edit Nature Fun Sessions')
 @section('content')
 
 <div class="container-fluid">

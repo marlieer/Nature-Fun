@@ -28,4 +28,11 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 
+
+    // view user profile
+    public function profile()
+    {
+        // TODO
+    }
+
 }

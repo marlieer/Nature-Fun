@@ -1,6 +1,5 @@
 @extends('layout')
 @section('title', 'My Registered Sessions')
-@section('h1', 'My Registered Sessions')
 @section('content')
 
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />

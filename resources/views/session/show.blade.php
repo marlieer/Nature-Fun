@@ -1,6 +1,5 @@
 @extends('layout');
 @section('title', $session->title)
-@section('h1', 'Class List')
 @section('content')
 
 <div class="text-right">

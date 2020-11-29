@@ -1,6 +1,5 @@
 @extends('layout')
 @section('title', 'Sign Up')
-@section('h1','Nature Fun Sign Up')
 @section('content')
 
 	<div id="myProgress">

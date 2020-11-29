@@ -1,4 +1,4 @@
-html, body {
+html {
     background-color: #ffff;
     color: #070F16;
     font-family: 'Nunito', sans-serif;
@@ -6,6 +6,11 @@ html, body {
     height: 100vh;
     margin: 0;
 }
+
+main {
+    /*margin-top: 100px;*/
+}
+
 .header {
   height:40px;
   margin:15px;

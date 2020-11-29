@@ -1,6 +1,5 @@
 @extends('layout')
 @section('title', 'Registration')
-@section('h1', 'Registered!')
 @section('content')
 
 <br>
