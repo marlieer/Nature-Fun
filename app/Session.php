@@ -15,14 +15,14 @@ class Session extends Model
      	'title', 'date', 'start_time', 'end_time','max_attendance', 'min_age', 'max_age'
      ];
 
-     public function registration()
+     public function registrations()
      {
      	return $this->hasMany('App\Registration');
      }
 
      public function spotsAvailable()
      {
-          return $this->max_attendance - count($this->registration());
+          return $this->max_attendance - count($this->registrations);
      }
 
      // children registered for a session but not signed up in the system
@@ -40,7 +40,7 @@ class Session extends Model
             ->join('registration','child.id','=','registration.child_id')
             ->join('users','child.user_id','=','users.id')
             ->where('registration.session_id',$this->id)
-            ->select('child.*','registration.id','registration.child_id','registration.is_paid','registration.session_id','users.phone','users.last_name')
+            ->select('child.*','registration.id AS registration_id','registration.child_id','registration.is_paid','registration.session_id','users.phone','users.last_name')
             ->get();
      }
 
@@ -114,7 +114,7 @@ class Session extends Model
 
      public function updateIsFull()
      {
-        $num_registered = count($this->registration());
+        $num_registered = count($this->registrations);
         if ($num_registered >= $this->max_attendance){
             $this->is_full=true;
             $this->save();

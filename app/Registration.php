@@ -21,7 +21,7 @@ class Registration extends Model
 
      public function session()
      {
-     	return Session::find($this->session_id);
+     	return $this->belongsTo('App\Session');
      }
 
      public function children()
@@ -38,7 +38,7 @@ class Registration extends Model
         // retrieve session and its classList
         $registration_id = -1;
         $session = Session::find($request->session_id);
-        $classList = $session->registration();
+        $classList = $session->registrations;
         $list = array();
         foreach($classList as $child){
             $list[]=$child->id;
@@ -79,7 +79,7 @@ class Registration extends Model
                     $success = $success . ", $child->name";
 
                     $registration_id = $registration->id;
-                    $num_registered = count($session->registration());
+                    $num_registered = count($session->registrations);
 
                     // update isFull status for session
                     if ($num_registered >= $session->max_attendance){

@@ -13,13 +13,13 @@ class SessionController extends Controller
     public function index()
     {
         $spotsAvailable = array();
-        $sessions = Session::get();
+        $sessions = Session::all();
         foreach ($sessions as $s) {
             $spotsAvailable[$s->id] = $s->spotsAvailable();
         }
 
-        $id = Auth::id() ?? -1;
-        return view('session.index', compact('sessions', 'spotsAvailable', 'id'));
+        $isAdmin = Auth::user()->isAdmin();
+        return view('session.index', compact('sessions', 'spotsAvailable', 'isAdmin'));
     }
 
 
@@ -32,7 +32,8 @@ class SessionController extends Controller
     public function store(Request $request)
     {
         // if repeat boxes checked, create session for each repeat
-        $attributes = request()->validate(['session_date' => ['required', 'date'],
+        $attributes = request()->validate([
+            'session_date' => 'required|date',
             'end_repeat' => 'date|after:session_date',
             'start_time' => 'date_format:H:i',
             'end_time' => 'date_format:H:i|after:start_time',
@@ -54,6 +55,7 @@ class SessionController extends Controller
 
         foreach ($children as $child) {
             $child->age = (new DateTime($child->birthdate))->diff(new DateTime())->y;
+            $child->name = decrypt($child->name);
         }
 
         return view('session.show', compact('session', 'children', 'otherChildren'));

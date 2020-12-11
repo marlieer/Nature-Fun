@@ -28,19 +28,17 @@ class RegistrationController extends Controller
     {
             $session = Session::findOrFail($s_id);
 
-            if(Auth::user()->id == 1){
-                $children = Child::join('users','child.f_id','=','users.id')
-                    ->select('c_id','child_name','last_name')
-                    ->get();
+            if(Auth::user()->isAdmin()) {
+                $children = Child::with('users')->get();
                 foreach($children as $child){
-                    $child->child_name = decrypt($child->child_name);
+                    $child->name = decrypt($child->name);
                 }
                 return view('registration.createAsAdmin', compact('session', 'children'));
             }
 
-            $children = Auth::user()->child();
+            $children = Auth::user()->childs();
             foreach($children as $child){
-                $child->child_name = decrypt($child->child_name);
+                $child->name = decrypt($child->name);
             }
 
             return view('registration.create', compact('session'), compact('children'));
@@ -74,7 +72,7 @@ class RegistrationController extends Controller
         $attributes = request()->validate([
             's_id'=>'required|exists:session,s_id',
             'phone'=>'required',
-            'child_name'=>'required',
+            'child'=>'required',
             'age'=>'required',
             'notes'=>'max:255',
             'allergy_info'=>'max:255'
@@ -91,21 +89,14 @@ class RegistrationController extends Controller
 
     public function show(Registration $registration)
     {
-        if (Auth::check()){
-            $id = Auth::user()->id;
             $session = $registration->session();
-            $children =  $registration->children();
-
-            if ($id != 1)
-                $children = $children->where('child.f_id', $id);
+            $children =  Auth::user()->isAdmin() ? $registration->children() : $registration->children()->where('child.user_id', Auth::id());
 
             foreach($children as $child){
-                $child->child_name = decrypt($child->child_name);
+                $child->name = decrypt($child->name);
             }
 
-            return view('registration.show', compact('registration', 'children', 'session', 'id'));
-        }
-        else return redirect()->route('login');
+            return view('registration.show', compact('registration', 'children', 'session'));
     }
 
 
@@ -126,13 +117,13 @@ class RegistrationController extends Controller
     {
         if (Auth::check()){
             $child = $registration->child();
-            $child->child_name = decrypt($child->child_name);
-            $session = $registration->session();
+            $child->name = decrypt($child->name);
+            $session = $registration->session;
             $success = '';
-            if($registration->c_id)
-                $success = "Successfully cancelled registration for $child->child_name on $session->date at $session->start_time";
+            if($registration->child_id)
+                $success = "Successfully cancelled registration for $child->name on $session->date at $session->start_time";
             else{
-                $success = "Successfully cancelled registration for $registration->child_name on $session->date at $session->start_time";
+                $success = "Successfully cancelled registration for $registration->name on $session->date at $session->start_time";
             }
             $errors = ['We do not accept online cancellations within 24 hours of the session date. Please call Scout Island Nature Centre at 250-398-8532 to cancel. You will not be refunded.'];
 

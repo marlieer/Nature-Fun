@@ -13,20 +13,14 @@ class Child extends Model
      ];
 
 
-      public function family()
-      {
-          $this->user();
-      }
-
-
-     public function registration()
+     public function registrations()
      {
      	return $this->hasMany('App\Registration');
      }
 
-     public function user()
+     public function users()
      {
-          $this->belongsTo('App\User', 'user_id', 'id');
+          return $this->belongsTo('App\User', 'user_id', 'id');
      }
 
      public function age()

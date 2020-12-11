@@ -54,8 +54,9 @@ use Illuminate\Support\Facades\URL;
                 @auth
                     @if(Auth::user()->isAdmin())
                         <li>
-                            <a href="{{ route('report-deadlines') }}"
-                               class="nav-link {{ $_SERVER['REQUEST_URI'] == '/report-deadlines' ? ' active' : '' }}">Report</a>
+                            <a href="{{ route('session.create') }}"
+                               class="nav-link {{ $_SERVER['REQUEST_URI'] == '/report-deadlines' ? ' active' : '' }}">Create
+                                Sessions</a>
                         </li>
 
                         <li class="nav-item dropdown">
@@ -155,7 +156,6 @@ use Illuminate\Support\Facades\URL;
             </div>
         @endif
         <br>
-
         @yield('content')
     </div>
 </main>
