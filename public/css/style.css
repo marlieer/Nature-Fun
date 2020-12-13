@@ -22,25 +22,12 @@ main {
 
 }
 
-.flex-center {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-}
-
-.position-ref {
-    position: relative;
-}
-
 .top-right {
     position: absolute;
     right: 10px;
     top: 18px;
 }
 
-.content {
-    text-align: center;
-}
 
 .title {
     font-size: 84px;
@@ -64,32 +51,7 @@ main {
 .container {
     padding: 12px;
 }
-input{
-    width: 60%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: block;
-    border: none;
-    background: #f1f1f1;
-}
-input:focus{
-    background-color: #ddd;
-    outline:none;
-}
-input[type=radio]{
-    width: 5%;
-    padding:0px;
-    margin: 0px 0px 0px 0px;
-    display:inline-flex;
-    border:none;
-}
-input[type=checkbox]{
-    width: 5%;
-    padding:0px;
-    margin: 0px 0px 0px 0px;
-    display:inline;
-    border:none;
-}
+
 textarea{
     display: block;
     width: 75%;
@@ -116,9 +78,7 @@ hr {
     border: 1px solid #f1f1f1;
     margin-bottom: 25px;
 }
-span {
-    display: block;
-}
+
 #myProgress{
     width:100%;
     background: #22822E;
@@ -180,6 +140,11 @@ span {
 /* When moving the mouse over the close button */
 .closebtn:hover {
   color: black;
+}
+
+.required {
+    color: red;
+    font-weight: bold;
 }
 
 ul {

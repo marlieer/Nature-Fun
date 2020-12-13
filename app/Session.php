@@ -55,7 +55,7 @@ class Session extends Model
             $end_repeat = new DateTime(request('end_repeat'));
 
 
-            if (request('mon')=='mon'){
+            if (request('mon')=='on'){
                 $date = new DateTime($start_date);
                 $date ->modify('next Monday')->format('Y-m-d');
                 while($date <= $end_repeat){
@@ -66,7 +66,7 @@ class Session extends Model
 
             }
 
-            if(request('tue')=='tue'){
+            if(request('tue')=='on'){
                 $date = new DateTime($start_date);
                 $date ->modify('next Tuesday')->format('Y-m-d');
                 while($date <= $end_repeat){
@@ -77,7 +77,7 @@ class Session extends Model
 
             }
 
-            if(request('wed')=='wed'){
+            if(request('wed')=='on'){
                 $date = new DateTime($start_date);
                 $date ->modify('next Wednesday')->format('Y-m-d');
                 while($date <= $end_repeat){
@@ -88,7 +88,7 @@ class Session extends Model
 
             }
 
-            if(request('thu')=='thu'){;
+            if(request('thu')=='on'){;
                 $date = new DateTime($start_date);
                 $date ->modify('next Thursday')->format('Y-m-d');
                 while($date <= $end_repeat){
@@ -96,10 +96,9 @@ class Session extends Model
                     Session::create($attributes);
                     $date ->modify('next Thursday')->format('Y-m-d');
                 }
-
             }
 
-            if(request('fri')=='fri'){
+            if(request('fri')=='on'){
                 $date = new DateTime($start_date);
                 $date ->modify('next Friday')->format('Y-m-d');
                 while($date <= $end_repeat){

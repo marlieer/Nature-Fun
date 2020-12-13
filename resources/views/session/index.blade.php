@@ -24,16 +24,16 @@
 
                         events: [
                                 @foreach($sessions as $session){
-                                title: ' {{ date('g', strtotime($session->start_time)) }}-{{ date('g', strtotime($session->end_time)) }} {{ date('a', strtotime($session->end_time)) }} \n {{ $session->max_attendance - $spotsAvailable[$session->id] }} / {{ $session->max_attendance }} spots filled!',
-                                start: '{{ $session->date }}',
+                                title: '{{ $session->title }} \n {{ $session->max_attendance - $session->spotsAvailable }}/{{ $session->max_attendance }} spots filled',
+                                start: '{{ $session->date . 'T' . $session->start_time }}',
+                                end: '{{ $session->date . 'T' . $session->end_time }}',
                                 url: 'session/{{$session->id}}',
-                                color: '#22822E',
-                                textColor: 'white'
+                                color: '{{ $session->spotsAvailable == 0 ? 'gold':'#22822E' }}',
+                                textColor: 'white',
+                                displayEventEnd: true,
                             },
                             @endforeach
-
                         ]
-
                     })
                 }
 
@@ -43,11 +43,13 @@
 
                         events: [
                                 @foreach($sessions as $session){
-                                title: ' {{ date('g', strtotime($session->start_time)) }}{{ ltrim(date('i', strtotime($session->start_time)), 0) }}-{{ date('g', strtotime($session->end_time)) }}{{ ltrim(date('i', strtotime($session->start_time)), 0) }} {{ date('a', strtotime($session->end_time)) }} \n {{ $spotsAvailable[$session->s_id] }} spots left!',
-                                start: '{{ $session->date }}',
+                                title: '{{ $session->title }} \n {{ $session->spotsAvailable }} spots left!',
+                                start: '{{ $session->date . 'T' . $session->start_time }}',
+                                end: '{{ $session->date . 'T' . $session->end_time }}',
                                 url: 'registration/{{ $session->id }}/create',
-                                color: '#22822E',
-                                textColor: 'white'
+                                color: '{{ $session->spotsAvailable == 0 ? 'gold':'#22822E' }}',
+                                textColor: 'white',
+                                displayEventEnd: true,
                             },
                             @endforeach
 

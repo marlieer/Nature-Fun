@@ -12,14 +12,13 @@ class SessionController extends Controller
 
     public function index()
     {
-        $spotsAvailable = array();
         $sessions = Session::all();
         foreach ($sessions as $s) {
-            $spotsAvailable[$s->id] = $s->spotsAvailable();
+            $s->spotsAvailable = $s->spotsAvailable();
         }
 
         $isAdmin = Auth::user()->isAdmin();
-        return view('session.index', compact('sessions', 'spotsAvailable', 'isAdmin'));
+        return view('session.index', compact('sessions', 'isAdmin'));
     }
 
 
@@ -34,12 +33,13 @@ class SessionController extends Controller
         // if repeat boxes checked, create session for each repeat
         $attributes = request()->validate([
             'session_date' => 'required|date',
-            'end_repeat' => 'date|after:session_date',
-            'start_time' => 'date_format:H:i',
-            'end_time' => 'date_format:H:i|after:start_time',
-            'max_attendance' => 'numeric',
-            'max_age' => 'numeric',
-            'min_age' => 'numeric'
+            'end_repeat' => 'required_with:mon,tue,wed,thu,fri|date|after:session_date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+            'max_attendance' => 'required|numeric',
+            'max_age' => 'nullable|numeric',
+            'min_age' => 'nullable|numeric',
+            'title' => 'nullable|max:70',
         ]);
 
         Session::createSessions($attributes, $request);
@@ -93,14 +93,15 @@ class SessionController extends Controller
     public function update(Session $session, Request $request)
     {
 
-        $attributes = request()->validate(['session_date' => ['required', 'date'],
-            'end_repeat' => 'date',
-            'start_time' => 'required',
-            'end_time' => 'required|after:start_time',
-            'max_attendance' => 'numeric',
-            'max_age' => 'numeric',
-            'min_age' => 'numeric',
-            'title' => 'max:70'
+        $attributes = request()->validate([
+            'session_date' => 'required|date',
+            'end_repeat' => 'required_with:mon,tue,wed,thu,fri|date|after:session_date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+            'max_attendance' => 'required|numeric',
+            'max_age' => 'nullable|numeric',
+            'min_age' => 'nullable|numeric',
+            'title' => 'nullable|max:70'
         ]);
 
         $session->update($attributes);
