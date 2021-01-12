@@ -47,13 +47,14 @@ class User extends Authenticatable
 
     public function registrations()
     {
-        return DB::table('child')
-            ->join('registration','registration.child_id','child.id')
-            ->join('users','users.id','child.user_id')
-            ->join('session','session.id','registration.session_id')
-            ->where('users.id', $this->id)
-            ->select('child.*','session.*','registration.*')
-            ->get();
+        return $this->hasManyThrough(
+            'App\Registration',
+            'App\Child',
+            'user_id',
+            'child_id',
+            'id',
+            'id'
+        );
     }
 
     public function isAdmin()

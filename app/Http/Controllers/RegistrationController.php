@@ -14,11 +14,13 @@ class RegistrationController extends Controller
     public function index()
     {
         {
-            $children = Auth::user()->children();
+            $children = Auth::user()->childs;
             foreach($children as $child){
-                $child->child_name = decrypt($child->child_name);
+                $child->name = decrypt($child->name);
             }
-            $registrations = Auth::user()->registrations();
+            $registrations = Auth::user()->registrations;
+
+            dd($registrations);
             return view('registration/index', compact('children','registrations'));
         }
     }
@@ -36,7 +38,7 @@ class RegistrationController extends Controller
                 return view('registration.createAsAdmin', compact('session', 'children'));
             }
 
-            $children = Auth::user()->childs();
+            $children = Auth::user()->childs;
             foreach($children as $child){
                 $child->name = decrypt($child->name);
             }
@@ -50,7 +52,7 @@ class RegistrationController extends Controller
         $attributes = request()->validate([
             'session_id'=>'required|exists:session,id',
         ]);
-        $children = Auth::user()->children();
+        $children = Auth::user()->childs;
 
         return Registration::store($children, $request);
     }
@@ -68,28 +70,27 @@ class RegistrationController extends Controller
 
     public function storeManual(Request $request)
     {
-        $session = Session::find($request->s_id);
+        $session = Session::find($request->session_id);
         $attributes = request()->validate([
-            's_id'=>'required|exists:session,s_id',
+            'session_id'=>'required|exists:session,id',
             'phone'=>'required',
-            'child'=>'required',
+            'name'=>'required',
             'age'=>'required',
             'notes'=>'max:255',
             'allergy_info'=>'max:255'
         ]);
 
-        $success = "Successfully registered $request->child_name";
         Registration::create($attributes);
         $session->updateIsFull();
 
-        $request->session()->flash('success', $success);
-        return redirect()->route('session.show',[$session->s_id]);
+        $request->session()->flash('success', "Successfully registered $request->child_name");
+        return redirect()->route('session.show',[$session->id]);
     }
 
 
     public function show(Registration $registration)
     {
-            $session = $registration->session();
+            $session = $registration->session;
             $children =  Auth::user()->isAdmin() ? $registration->children() : $registration->children()->where('child.user_id', Auth::id());
 
             foreach($children as $child){
@@ -103,9 +104,9 @@ class RegistrationController extends Controller
     public function edit(Registration $registration)
     {
         if(Auth::check()){
-            $session = $registration->session();
-            $child = $registration->child();
-            $child->child_name = decrypt($child->child_name);
+            $session = $registration->session;
+            $child = $registration->child;
+            $child->name = decrypt($child->name);
 
             return view('registration.edit', compact('session','registration','child'));
         }

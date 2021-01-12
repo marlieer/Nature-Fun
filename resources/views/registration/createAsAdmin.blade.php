@@ -42,8 +42,8 @@
         <form method="POST" action="/manualRegistration">
             {{ csrf_field()}}
             <br>
-            <input type="hidden" name="s_id" value="{{ $session->s_id }}"></input>
-            <div>Child Name<input type="text" name="child_name" placeholder="Child Name"/></div>
+            <input type="hidden" name="session_id" value="{{ $session->id }}">
+            <div>Child Name<input type="text" name="name" placeholder="Child Name"/></div>
             <div>Age<input type="number" name="age" placeholder="age"/></div>
             <div>Contact #<input type="tel" placeholder="Format: 123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                  name="phone"/></div>

@@ -11,12 +11,12 @@ class Registration extends Model
      protected $table = 'registration';
 
      protected $fillable = [
-     	'session_id', 'child_id','child_name','phone','allergy_info','notes','age'
+     	'session_id', 'child_id','name','phone','allergy_info','notes','age'
      ];
 
      public function child()
      {
-     	return Child::find($this->child_id);
+     	return $this->belongsTo('App\Child');
      }
 
      public function session()

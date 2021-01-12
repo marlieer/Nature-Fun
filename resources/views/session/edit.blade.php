@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="container-fluid">
-<form method="POST" action="/session/{{$session->s_id}}" style="margin-bottom: 1em">
-	{{method_field("PATCH")}}
+<form method="POST" action="/session/{{$session->id}}" style="margin-bottom: 1em">
+	@method('PATCH')
 	@csrf
 	<div class="field">
 		<div class="control">

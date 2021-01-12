@@ -53,7 +53,7 @@ Route::middleware(['auth','admin'])->group( function () {
 
     // create, edit and delete sessions
     Route::resource('session', 'SessionController')->only([
-        'create', 'store', 'edit', 'destroy'
+        'create', 'store', 'edit', 'update', 'destroy'
     ]);
 
     Route::post('/registrationAsAdmin','RegistrationController@storeAsAdmin');

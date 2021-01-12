@@ -10,10 +10,15 @@ class HomeController extends Controller
 {
     public function dashboard()
     {
-        $children = Auth::user()->children;
-        foreach($children as $child){
-            $child->name = decrypt($child->name);
+        $children = Auth::user()->childs;
+
+        if($children)
+        {
+            foreach($children as $child){
+                $child->name = decrypt($child->name);
+            }
         }
+
         $registrations = DB::table('child')
             ->join('registration','registration.child_id','child.id')
             ->join('users','users.id','child.user_id')

@@ -20,7 +20,7 @@ class CreateRegistrationTable extends Migration
             $table->bigInteger('child_id')->nullable();
             $table->foreign('child_id')->references('id')->on('child')->onDelete('cascade');
             $table->boolean('is_paid')->nullable()->default(false);
-            $table->string('child_name')->nullable();
+            $table->string('name')->nullable();
             $table->unsignedInteger('age')->nullable();
             $table->string('phone')->nullable();
             $table->string('allergy_info')->nullable();
