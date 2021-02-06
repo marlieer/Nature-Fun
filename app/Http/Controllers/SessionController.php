@@ -12,13 +12,7 @@ class SessionController extends Controller
 
     public function index()
     {
-        $sessions = Session::all();
-        foreach ($sessions as $s) {
-            $s->spotsAvailable = $s->spotsAvailable();
-        }
-
-        $isAdmin = Auth::user()->isAdmin();
-        return view('session.index', compact('sessions', 'isAdmin'));
+        return view('session.index', ['sessions' => Session::all()]);
     }
 
 
@@ -53,11 +47,6 @@ class SessionController extends Controller
         $children = $session->childrenInTheSystem();
         $otherChildren = $session->childrenNotInTheSystem();
 
-        foreach ($children as $child) {
-            $child->age = (new DateTime($child->birthdate))->diff(new DateTime())->y;
-            $child->name = decrypt($child->name);
-        }
-
         return view('session.show', compact('session', 'children', 'otherChildren'));
     }
 
@@ -71,9 +60,6 @@ class SessionController extends Controller
         foreach ($sessions as $session) {
             $children = $session->childrenInTheSystem();
             $otherChildren = $session->childrenNotInTheSystem();
-
-            foreach ($children as $child)
-                $child->age = (new DateTime($child->birthdate))->diff(new DateTime())->y;
 
             array_push($childrens, $children);
             array_push($otherChildrens, $otherChildren);

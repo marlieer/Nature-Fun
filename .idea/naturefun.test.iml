@@ -104,16 +104,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="In Class" />
-    <orderEntry type="module" module-name="Lab-2-Marlie-Russell" />
-    <orderEntry type="module" module-name="Lab 3-Marlie Russell" />
     <orderEntry type="module" module-name="Project" />
-    <orderEntry type="module" module-name="Lab-4-Starter-Code" />
     <orderEntry type="module" module-name="videos" />
-    <orderEntry type="module" module-name="Lab-5" />
-    <orderEntry type="module" module-name="lab-6-starter-code" />
-    <orderEntry type="module" module-name="COSC360" />
-    <orderEntry type="module" module-name="htdocs" />
     <orderEntry type="library" name="jquery-1.11.3" level="application" />
     <orderEntry type="library" name="moment" level="application" />
     <orderEntry type="library" name="fullcalendar" level="application" />

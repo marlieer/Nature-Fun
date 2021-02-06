@@ -20,7 +20,6 @@ Route::get('/contact_us', function() {
 	return view('contact_us');
 })->name('contact_us');
 
-
 // must be logged in to access these routes
 Route::middleware('auth')->group( function() {
     Route::resource('registration','RegistrationController');
@@ -74,3 +73,4 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::resource('session', 'SessionController')->only([
     'index', 'show'
 ]);
+

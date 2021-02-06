@@ -36,8 +36,8 @@
 				cursor: pointer;">Remove</button>
 			</form>
 		</td>
-		<td>{{ $child->name }} {{ $child->last_name }}</td>
-		<td>{{ $child->age }} </td>
+		<td>{{ decrypt($child->name) }} {{ $child->last_name }}</td>
+		<td>{{ $child->age() }} </td>
 		<td>{{ $child->phone }}</td>
 		<td>{{ $child->allergy_info }}</td>
 		<td>{{ $child->notes }}</td>
@@ -59,7 +59,7 @@
 				cursor: pointer;">Remove</button>
 			</form>
 		</td>
-		<td>{{ $child->name }} {{ $child->last_name }}</td>
+		<td>{{ decrypt($child->name) }} {{ $child->last_name }}</td>
 		<td>{{ $child->age }} </td>
 		<td>{{ $child->phone }}</td>
 		<td>{{ $child->allergy_info }}</td>

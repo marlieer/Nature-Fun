@@ -18,36 +18,38 @@
             $(document).ready(function () {
                 // page is now ready, initialize the calendar...
 
-                    @if($isAdmin){
+                    @if(auth()->user() ? auth()->user()->isAdmin : false)
+                {
                     $('#calendar').fullCalendar({
                         // put your options and callbacks here
 
                         events: [
                                 @foreach($sessions as $session){
-                                title: '{{ $session->title }} \n {{ $session->max_attendance - $session->spotsAvailable }}/{{ $session->max_attendance }} spots filled',
+                                title: '{{ $session->title }} \n {{ $session->max_attendance - $session->spotsAvailable() }}/{{ $session->max_attendance }} spots filled',
                                 start: '{{ $session->date . 'T' . $session->start_time }}',
                                 end: '{{ $session->date . 'T' . $session->end_time }}',
                                 url: 'session/{{$session->id}}',
-                                color: '{{ $session->spotsAvailable == 0 ? 'gold':'#22822E' }}',
+                                color: '{{ $session->spotsAvailable() == 0 ? 'gold':'#22822E' }}',
                                 textColor: 'white',
                                 displayEventEnd: true,
                             },
                             @endforeach
-                        ]
+                        ],
+
                     })
                 }
-
-                    @else{
+                    @else
+                {
                     $('#calendar').fullCalendar({
                         // put your options and callbacks here
 
                         events: [
                                 @foreach($sessions as $session){
-                                title: '{{ $session->title }} \n {{ $session->spotsAvailable }} spots left!',
+                                title: '{{ $session->title }} \n {{ $session->spotsAvailable() }} spots left!',
                                 start: '{{ $session->date . 'T' . $session->start_time }}',
                                 end: '{{ $session->date . 'T' . $session->end_time }}',
                                 url: 'registration/{{ $session->id }}/create',
-                                color: '{{ $session->spotsAvailable == 0 ? 'gold':'#22822E' }}',
+                                color: '{{ $session->spotsAvailable() == 0 ? 'gold':'#22822E' }}',
                                 textColor: 'white',
                                 displayEventEnd: true,
                             },

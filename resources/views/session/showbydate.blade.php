@@ -29,8 +29,8 @@
 		<tr>
 			<td>{{ $child->is_paid }}</td>
 			<td>  </td>
-			<td>{{ $child->name }} {{$child->last_name}}</td>
-			<td>{{ $child->age }} </td>
+			<td>{{ decrypt($child->name) }} {{$child->last_name}}</td>
+			<td>{{ $child->age() }} </td>
 			<td>{{ $child->phone }}</td>
 			<td>{{ $child->allergy_info }}</td>
 			<td>{{ $child->notes }}</td>
@@ -45,8 +45,8 @@
 		<tr>
 			<td>{{ $child->is_paid }}</td>
 			<td>  </td>
-			<td>{{ $child->name }}</td>
-			<td>{{ $child->age }} </td>
+			<td>{{ decrypt($child->name) }}</td>
+			<td>{{ $child->age() }} </td>
 			<td>{{ $child->phone }}</td>
 			<td>{{ $child->allergy_info }}</td>
 			<td>{{ $child->notes }}</td>
